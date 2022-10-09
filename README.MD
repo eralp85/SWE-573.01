@@ -9,6 +9,10 @@ gathering to deployment.
 Django frame will be used 
 for the project. 
 
+MySQL will be used for database management.
+
+Docker containers will be used.
+
 Any relevant content will be available on this platform. 
 here.
 
