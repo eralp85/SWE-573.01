@@ -6,7 +6,6 @@ The purpose of this project is to develop a
 software product, beginning from requirements 
 gathering to deployment. 
 
-## Infrastructure
 Django frame will be used 
 for the project. 
 
