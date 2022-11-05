@@ -2,45 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Mumtaz Eralp's WebPage</title>
+    <title> Mumtaz Eralp's WebPage </title>
 </head>
 <body>
     <header>
+        <h1>
+            SWE-578 Project
+        </h1>
 
-        <h1> SWE-578 Project
     </header>
 
+
+{% for post in posts %}
     <article>
         <time>
-            Published: 05.11.2022 11:45
+            Published: {{ post.published_date }}
         </time>
         <h2>
             <a href="">
-                My First Post
+                {{ post.title }}
             </a>
         </h2>
-        <p> Hello World! </p>
-        <p> This is my First WebPage </p>
-    </article>
-
-    <article>
-
-
+        <p> {{ post.text|linebreaksbr }} </p>
 
     </article>
-
-    <article>
-        <time>
-            Published: 05.11.2022 11:45
-        </time>
-        <h2>
-            <a href="">
-                My Second Post
-            </a>
-        </h2>
-        <p> Hello World! </p>
-        <p> This is second entry WebPage </p>
-    </article>
+{% endfor %}
 
  <p></p>
     <p></p>
