@@ -10,5 +10,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\ERALP\OneDrive\Desktop\Software Engineering\SWE573-Software Development Practice\SWE-573.01\db.sqlite3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="django@localhost" uuid="3a6580ed-f9fb-43ea-a707-5b06361548d5">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/django</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
