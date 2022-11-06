@@ -1,0 +1,22 @@
+# default django app with mysql database
+
+version: "3.3"
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: django
+      MYSQL_USER: django
+      MYSQL_PASSWORD: django
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+
+volumes:
+  db_data:
