@@ -1,0 +1,20 @@
+{% extends 'posts/base.html' %}
+
+{% block content %}
+    {% for post in posts %}
+    <article>
+        <time>
+            Published: {{ post.published_date }}
+        </time>
+        <h2>
+            <a href="/post/{{ post.id }}">
+                {{ post.title }}
+            </a>
+        </h2>
+        <p> {{ post.text|linebreaksbr }} </p>
+
+    </article>
+    {% endfor %}
+
+{% endblock %}
+
