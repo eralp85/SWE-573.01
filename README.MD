@@ -27,6 +27,20 @@ Any relevant content will be available on this platform.
 
 Project will continuously be updated on [GitHub project repository](https://github.com/eralp85/SWE-573.01).
 
+Project MilesStones are as below:
+
+- [X] 1st Milestone due on 08.11.2022
+
+-Requirements and basic web application infrastructure with login
+
+- [ ] 2nd Milestone due on 06.12.2022
+    
+-Fundamental features, Dockerization, deployed
+
+- [ ] 3rd Milestone due on 27.12.2022
+    
+-Complete features, dockerized, deployed
+
 [Eralp Unver](https://github.com/eralp85) will be maintaining the project.
 
 This project is under supervision of [Suzan Uskudarli](https://github.com/uskudarli) .
