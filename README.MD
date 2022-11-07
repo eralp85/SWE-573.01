@@ -1,8 +1,18 @@
-<center><img alt="University Logo" height="295" src="img.png" title="Bogazici University" width="336"/> </center>
+<div align="center">
+<img alt="University Logo" height="295" src="img.png" title="Bogazici University" width="336"/> 
+</div>
 
-<center>SWE-573</center> 
-<center> Software Development Practice </center>
-<center>Fall 2022</center> 
+<div align="center">
+<h3 align="center">SWE 573 
+
+Software Development Practice
+</h3>
+
+<p align="center">
+**Fall 2022**
+</p>
+</div>
+
 
 # **Introduction**
 
@@ -29,17 +39,19 @@ Project will continuously be updated on [GitHub project repository](https://gith
 
 Project MilesStones are as below:
 
-- [X] 1st Milestone due on 08.11.2022
+- [X] 1st Milestone due on 08.11.2022 
+  - -Requirements and basic web application infrastructure with login
+  
 
--Requirements and basic web application infrastructure with login
 
 - [ ] 2nd Milestone due on 06.12.2022
-    
--Fundamental features, Dockerization, deployed
+
+  - -Fundamental features, Dockerization, deployed
+  
 
 - [ ] 3rd Milestone due on 27.12.2022
-    
--Complete features, dockerized, deployed
+
+  - -Complete features, dockerized, deployed
 
 [Eralp Unver](https://github.com/eralp85) will be maintaining the project.
 
