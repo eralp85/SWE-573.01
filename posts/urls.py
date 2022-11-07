@@ -11,4 +11,6 @@ urlpatterns = [
     path('post/<int:pk>/remove/', views.post_remove, name='post_remove'),
 
 
+
+
 ]
