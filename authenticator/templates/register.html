@@ -1,13 +1,19 @@
 {% extends "posts/templates/posts/base.html" %}
 
-
 {% block content %}
 
 {% load crispy_forms_tags %}
 
 <!--Register-->
 <div class="container py-5">
-	<h1>Register</h1>
+	<h<!-- Messages -->
+	{% if messages %}
+		{% for message in messages %}
+			<div class="alert alert-{{ message.tags }}" role="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
+	{% endif %}
 	<form method="POST">
 		{% csrf_token %}
 		{{ register_form|crispy }}
@@ -17,5 +23,3 @@
 </div>
 
 {% endblock %}
-</body>
-</html>

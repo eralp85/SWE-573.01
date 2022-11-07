@@ -76,3 +76,11 @@ h4 {
     color: #CC0000;
     background-color: #C25100;
 }
+/* div align right, text color white */
+.links {
+    text-align: right;
+    color: #FFFFFF;
+}
+.links>a {
+    color: #FFFFFF;
+}
