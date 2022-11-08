@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'posts',
     'authenticator',
     'crispy_forms',
+    'users_',
 
 
 ]
