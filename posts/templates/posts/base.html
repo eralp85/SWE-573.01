@@ -22,6 +22,11 @@
             <a href="{% url 'register' %}">Register</a>
             {% endif %}
         </div>
+
+        <a href="{% url 'post_new' %}" class="top-menu">
+
+            {% include './icons/file-earmark-plus.svg' %}
+        </a>
     </div>
     <div class="content container">
         <div class="row">
@@ -35,15 +40,11 @@
     <header class="page-header">
         <div class="container">
 
-            <h1>
-                SWE-573 Project
-            </h1>
+            <h1><a href="/">SWE-573 Project</a></h1>
 
             <!-- LOGIN LOGOUT LINKS -->
 
-            <a href="{% url 'post_new' %}" class="top-menu">
-                {% include './icons/file-earmark-plus.svg' %}
-            </a>
+
         </div>
 
     </header>
