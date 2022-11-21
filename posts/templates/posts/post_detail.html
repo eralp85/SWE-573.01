@@ -4,8 +4,14 @@
     <article class="post">
         <aside class="actions">
 
+
+
             <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
                 {% include './icons/pencil-fill.svg' %}
+            </a>
+
+            <a class="btn btn-secondary" href="{% url 'post_remove' pk=post.pk %}">
+                {% include './icons/clipboard-x.svg' %}
             </a>
 
         {% if post.published_date %}

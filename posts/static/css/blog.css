@@ -4,7 +4,7 @@ h1 a, h2 a {
 }
 
 body {
-    padding-left: 15px;
+    padding-left: 1px;
 }
 .page-header {
     background-color: #CC0000;
@@ -18,7 +18,7 @@ body {
 .page-header h1 a:visited,
 .page-header h1 a:active {
     color: #FFFFFF;
-    font-size: 40pt;
+    font-size: 20pt;
     text-decoration: none;
 }
 
@@ -47,12 +47,12 @@ h4 {
 .top-menu:visited {
     color: #CC0000;
     float: right;
-    font-size: 26pt;
+    font-size: 50pt;
     margin-right: 20px;
 }
 
 .post {
-    margin-bottom: 70px;
+    margin-bottom: 50px;
 }
 
 .post h2 a,
@@ -67,14 +67,14 @@ h4 {
 
 .btn-secondary,
 .btn-secondary:visited {
-    color: #C25100;
+    color: #660066;
     background: none;
-    border-color: #C25100;
+    border-color: #660066;
 }
 
 .btn-secondary:hover {
     color: #CC0000;
-    background-color: #C25100;
+    background-color: #660066;
 }
 /* div align right, text color white */
 .links {
