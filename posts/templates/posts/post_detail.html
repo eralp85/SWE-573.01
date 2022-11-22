@@ -4,8 +4,6 @@
     <article class="post">
         <aside class="actions">
 
-
-
             <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
                 {% include './icons/pencil-fill.svg' %}
             </a>
@@ -22,4 +20,24 @@
         <h2>{{ post.title }}</h2>
         <p>{{ post.text|linebreaksbr }}</p>
     </article>
+    <hr>
+
+    <a class="btn btn-default" href="<div data-gb-custom-block data-tag="url" data-0='add_comment_to_post'></div>
+
+    ">Add comment</a>
+
+    <div data-gb-custom-block data-tag="for"></div>
+
+        <div class="comment">
+            <div class="date">{{ comment.created_date }}</div>
+            <strong>{{ comment.author }}</strong>
+            <p>{{ comment.text|linebreaks }}</p>
+        </div>
+
+    <div data-gb-custom-block data-tag="empty">
+
+        <p>There is no comment under this post... :(</p>
+
+    </div>
 {% endblock %}>
+

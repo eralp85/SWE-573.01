@@ -1,0 +1,14 @@
+<div data-gb-custom-block data-tag="extends" data-0='blog/base.html'></div>
+
+<div data-gb-custom-block data-tag="block"></div>
+
+    <h1>New comment</h1>
+    <form method="POST" class="post-form">
+
+<div data-gb-custom-block data-tag="csrf_token">
+
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Send</button>
+    </form>
+
+</div>
