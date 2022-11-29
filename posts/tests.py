@@ -3,6 +3,7 @@ from django.test import TestCase
 from .models import Post
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
+from django.shortcuts import render, get_object_or_404
 
 # Create your tests here.
 
@@ -54,3 +55,8 @@ class PostTestCase(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn( "This password is too common.", form.errors.as_text())
         self.assertIn("This password is too short.", form.errors.as_text())
+
+    def test_is_password_username_valid(self):
+        user = authenticate(username='sevval', password='1234')
+        self.assertFalse(user)
+
