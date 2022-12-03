@@ -7,7 +7,11 @@ from django.utils import timezone
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
+    link = models.CharField(max_length=200, null='True', blank='True', unique='False')
+    tags = models.CharField(max_length=20, null='True', blank='True', unique='False')
+    labels = models.CharField(max_length=50, null='True', blank='True', unique='False')
     text = models.TextField()
+    upload = models.FileField(upload_to='uploads/', null='True', blank='True', unique='False')
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
