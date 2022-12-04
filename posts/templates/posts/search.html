@@ -1,0 +1,29 @@
+{% extends 'posts/base.html' %}
+
+
+{% block content %}
+
+    {% if searched %}
+        <h1> You Searched for {{ searched }}</h1>
+
+        <br/>
+        {% for post in posts_s_ %}
+            <a href="/post/{{ post.id }}">{{ post}} </a><br/>
+        {% endfor %}
+
+    {% else %}
+        <h1> You forgot to search ... </h1>
+
+    {% endif  %}
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+

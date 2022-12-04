@@ -5,6 +5,8 @@ from .models import Post
 from django.shortcuts import render, get_object_or_404
 from .forms import PostForm,CommentForm
 from django.shortcuts import redirect
+from django.db.models import Q
+
 
 # Create your views here.
 
@@ -65,3 +67,14 @@ def add_comment_to_post(request, pk):
     else:
         form = CommentForm()
     return render(request, 'posts/add_comment_to_post.html', {'form': form})
+
+def search (request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        posts_s_ = Post.objects.filter(Q(title__contains=searched) | Q(text__contains=searched))
+
+        #posts_s_ = Post.objects.filter(title__contains=searched | text__contains=searched)
+
+        return render(request, 'posts/search.html', {'searched': searched, 'posts_s_': posts_s_})
+    else:
+        return render(request, 'posts/search.html', {})
