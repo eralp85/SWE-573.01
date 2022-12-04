@@ -8,7 +8,7 @@
 
         <br/>
         {% for post in posts_s_ %}
-            <a href="/post/{{ post.id }}">{{ post}} </a><br/>
+            <a href="/post/{{ post.id }}">{{ post}} - {{ post.title}}  </a><br/>
         {% endfor %}
 
     {% else %}

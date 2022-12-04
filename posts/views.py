@@ -18,12 +18,14 @@ def post_list(request):
 @login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'posts/post_detail.html', {'post': post})
+    comments = post.comments
+    return render(request, 'posts/post_detail.html', {'post': post, 'comments': comments})
 
 @login_required
 def post_new(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
+
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -60,6 +62,7 @@ def add_comment_to_post(request, pk):
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
+
             comment = form.save(commit=False)
             comment.post = post
             comment.save()
@@ -71,7 +74,8 @@ def add_comment_to_post(request, pk):
 def search (request):
     if request.method == "POST":
         searched = request.POST['searched']
-        posts_s_ = Post.objects.filter(Q(title__contains=searched) | Q(text__contains=searched))
+        searched = searched.lower()
+        posts_s_ = Post.objects.filter(Q(title__icontains=searched) | Q(text__icontains=searched))
 
         #posts_s_ = Post.objects.filter(title__contains=searched | text__contains=searched)
 
