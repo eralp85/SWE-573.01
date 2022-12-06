@@ -63,5 +63,5 @@ Project [Milestones](https://github.com/eralp85/SWE-573.01/milestones) are as be
 
 This project is under supervision of [Suzan Uskudarli](https://github.com/uskudarli) .
 
-
+You can visit the site at http://3.85.36.51:8000
 
