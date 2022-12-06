@@ -15,33 +15,47 @@
                         <div class="btn-group">
 
 
-
-                            <a href="/post/{{ post.id }}/comment/" class="btn btn-sm btn-outline-secondary" > Comment> </a>
+                            <a href="/post/{{ post.id }}/comment/" class="btn btn-sm btn-outline-secondary">
+                                Comment> </a>
                             {% if post.link %}
-                                <a href ="{{ post.link}}" target="_blank" class="btn btn-sm btn-outline-secondary" > Goto> </a>
+                                <a href="{{ post.link }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                                    Goto> </a>
                             {% else %}
                                 There is no Link
                             {% endif %}
 
-                            <div class="bd-example-snippet bd-code-snippet"><div class="bd-example">
-                            <div class="btn-group w-100 align-items-center justify-content-between flex-wrap">
-                              <div class="dropend">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Action
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><h6 class="dropdown-header">Choose Action</h6></li>
-                                  <li><a class="dropdown-item" href="#">Like</a></li>
-                                  <li><a class="dropdown-item" href="#">Award</a></li>
-                                  <li><a class="dropdown-item" href="#">Prioritize</a></li>
-                                  <li><hr class="dropdown-divider"></li>
-                                  <li><a class="dropdown-item" href="#">Separated link</a></li>
-                                </ul>
-                              </div>
+                            <div class="bd-example-snippet bd-code-snippet">
+                                <div class="bd-example">
+                                    <div class="btn-group w-100 align-items-center justify-content-between flex-wrap">
+                                        <div class="dropend">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                Action
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><h6 class="dropdown-header">Choose Action</h6></li>
+                                                <li><a class="dropdown-item" href="#">Like</a></li>
+                                                <li><a class="dropdown-item" href="#">Award</a></li>
+                                                <li><a class="dropdown-item" href="#">Prioritize</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
                         </div>
-                        <small class="text-muted">Published: {{ post.published_date }}</small>
-                        <small class="text-muted">User: {{ post.author}}</small>
+
                     </div>
+                <div class="d-flex w-100 justify-content-between">
+                                    <small class="text-muted">Published: {{ post.published_date }}</small>
+                                    <a href="/users/{{ post.author_id }}" class="text-muted small"> User: {{ post.author }}</a>
+                                </div>
                 </div>
 
             </div>
