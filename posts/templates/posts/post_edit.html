@@ -1,6 +1,7 @@
 {% extends 'posts/base.html' %}
 
 {% block content %}
+
     <h2>New1 post</h2>
 
     <form method="POST" enctype="multipart/form-data">
@@ -35,11 +36,13 @@
 
         </div>
 
+        <br>
+
         <p>
             <label for="id_upload">Upload:</label>
             <input type="file" name="upload" id="id_upload">
         </p>
-
+             <br>
         <p>
             <label for="id_text">Text:</label>
             <textarea name="text" cols="40" rows="10" required="" id="id_text" data-gramm="false"

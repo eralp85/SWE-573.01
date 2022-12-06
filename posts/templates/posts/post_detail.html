@@ -12,30 +12,31 @@
                 {% include './icons/clipboard-x.svg' %}
             </a>
 
-        {% if post.published_date %}
-            <time class="date">
-                {{ post.published_date }}
-            </time>
-        {% endif %}
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.text|linebreaksbr }}</p>
+            {% if post.published_date %}
+                <time class="date">
+                    {{ post.published_date }}
+                </time>
+            {% endif %}
+            <h2>{{ post.title }}</h2>
+            <a href="{{ post.link }}">{{ post.link }}</a>
+            <p>{{ post.text|linebreaksbr }}</p>
     </article>
     <hr>
 
     <a class="btn btn-default" href="comment/">Add comment</a>
 
-    <div data-gb-custom-block data-tag="for"></div>
-
+    {% for comment in post.comments.all %}
         <div class="comment">
             <div class="date">{{ comment.created_date }}</div>
             <strong>{{ comment.author }}</strong>
             <p>{{ comment.text|linebreaks }}</p>
         </div>
+    {% endfor %}
 
-    <div data-gb-custom-block data-tag="empty">
-
+    {% if not post.comments.all %}
         <p>There is no comment under this post... :(</p>
+    {% endif %}
 
-    </div>
+
 {% endblock %}>
 

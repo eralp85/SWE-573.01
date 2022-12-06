@@ -15,8 +15,14 @@
                         <div class="btn-group">
 
 
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Comment</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">GoTo</button>
+
+                            <a href="/post/{{ post.id }}/comment/" class="btn btn-sm btn-outline-secondary" > Comment> </a>
+                            {% if post.link %}
+                                <a href ="{{ post.link}}" target="_blank" class="btn btn-sm btn-outline-secondary" > Goto> </a>
+                            {% else %}
+                                There is no Link
+                            {% endif %}
+
                             <div class="bd-example-snippet bd-code-snippet"><div class="bd-example">
                             <div class="btn-group w-100 align-items-center justify-content-between flex-wrap">
                               <div class="dropend">
