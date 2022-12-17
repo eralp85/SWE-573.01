@@ -82,3 +82,6 @@ def search (request):
         return render(request, 'posts/search.html', {'searched': searched, 'posts_s_': posts_s_})
     else:
         return render(request, 'posts/search.html', {})
+
+def my_research(request):
+    return render(request, 'posts/my_research.html')
