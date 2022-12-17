@@ -26,7 +26,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='comments')
-    author = models.CharField(max_length=200)
+    author = models.CharField(max_length=200, null=True)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)
@@ -39,10 +39,23 @@ class Comment(models.Model):
         return self.text
 
 class Tag(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return self.text
+        return self.name
+
+class Label(models.Model):
+    CATEGORY = (
+        ('Macro Economy', 'Macro Economy'),
+        ('Equity', 'Equity'),
+        ('Fixed Income', 'Fixed Income'),
+        ('Company News', 'Company News')
+    )
+
+    label = models.CharField(max_length=200, null=True, choices=CATEGORY)
+
+    def __str__(self):
+        return self.label
 
 class Author(models.Model):
     user = models.OneToOneField(User, null= True, on_delete=models.CASCADE)
@@ -52,4 +65,4 @@ class Author(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return self.text
+        return self.user
