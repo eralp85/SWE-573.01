@@ -84,8 +84,9 @@ def search (request):
         return render(request, 'posts/search.html', {})
 
 def my_research(request):
+    posts = Post.objects.filter(author_id=request.user.id).order_by('published_date')
 
-    return render(request, 'posts/my_research.html')
+    return render(request, 'posts/my_research.html', {'posts': posts})
 
 def my_profile(request):
     author = request.user.author

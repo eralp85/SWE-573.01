@@ -5,14 +5,13 @@
     <div class="row">
         <div class="col">
             <div class="col-md">
-                <div class="card text-center text-white mb-3" id="Total Posts">
+                <div class="card text-center mb-3" id="Total Posts">
                     <div class="card-header">
                         <h5 class="card-title"> Total Posts</h5>
                     </div>
 
                     <div class="card-body">
-                        <h3 class="card-title"></h3>
-
+                        <h3 class="card-title">{{ posts.count }}</h3>
                     </div>
                 </div>
             </div>
@@ -24,7 +23,7 @@
     <div class="row">
         <div class="col">
             <div class="col-md">
-                <div class="card text-center text-white mb-3" id="Likes">
+                <div class="card text-center mb-3" id="Likes">
                     <div class="card-header">
                         <h5 class="card-title"> Likes</h5>
                     </div>
@@ -46,44 +45,28 @@
             <th scope="col">Post Title</th>
             <th scope="col">Post Link</th>
             <th scope="col">Post Tags</th>
-            <th scope="col">Post Upload</th>
+            <th scope="col">Post Label</th>
             <th scope="col">Post Text</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>{{ post.title }}</td>
-            <td>{{ post.link }}</td>
-            <td>{{ post.tags }}</td>
-            <td>{{ post.labels }}</td>
-            <td>{{ post.uploads }}</td>
-            <td>
-                <button type="button" class="btn btn-outline-warning">Edit</button>
-                <button type="button" class="btn btn-outline-danger">Delete</button>
-                <button type="button" class="btn btn-outline-success">Comment</button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-            <td>
-                <button type="button" class="btn btn-outline-warning">Edit</button>
-                <button type="button" class="btn btn-outline-danger">Delete</button>
-                <button type="button" class="btn btn-outline-success">Comment</button>
-            </td>
+        {% for post in posts %}
+            <tr>
+                <th scope="row">{{ post.id }}</th>
+                <td>{{ post.title }}</td>
+                <td>{{ post.link }}</td>
+                <td>{{ post.tags }}</td>
+                <td>{{ post.labels }}</td>
+                <td title="{{ post.text|slice:"0:200" }}">{{ post.text|slice:"0:10" }}...</td>
+                <td>
+                    <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-outline-warning">Edit</a>
+                    <a href="{% url 'post_remove' pk=post.pk %}" class="btn btn-outline-danger">Delete</a>
+                    <a href="{% url 'add_comment_to_post' pk=post.pk %}" class="btn btn-outline-success">Comment</a>
+                </td>
+            </tr>
+        {% endfor %}
 
-        </tr>
         </tbody>
     </table>
 {% endblock %}>

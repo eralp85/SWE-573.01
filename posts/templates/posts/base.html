@@ -19,7 +19,7 @@
     <div class="container d-flex flex-wrap justify-content-center">
         <ul class="nav">
             <li class="nav-item"><a href="/" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">My Research</a></li>
+            <li class="nav-item"><a href="/myresearch" class="nav-link link-dark px-2">My Research</a></li>
             <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Friends</a></li>
             <li class="nav-item"><a href="#" class="nav-link link-dark px-2">FAQs</a></li>
             <li class="nav-item"><a href="#" class="nav-link link-dark px-2">My Account</a></li>
@@ -40,7 +40,7 @@
 
                 {% include './icons/file-earmark-plus.svg' %}
             </a>
-            <form class="mb-3 mb-lg-0 me-lg-3 d-flex" role="search" method=POST action="{% url 'search' %}">
+            <form class="mb-3 mb-lg-0 me-lg-3 d-flex align-items-center" role="search" method=POST action="{% url 'search' %}">
 
                 {% csrf_token %}
 
@@ -48,6 +48,9 @@
                        aria-label="Search" name="searched">
                 <div class="text-end ms-2">
                     <a class="btn btn-warning" href="{% url 'logout' %}">Logout</a>
+                </div>
+                <div class="ps-2 small">
+                    Hello, <br><strong>{{ user.username }}</strong>
                 </div>
             </form>
 
