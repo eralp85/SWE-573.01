@@ -1,43 +1,99 @@
 {% extends 'posts/base.html' %}
 
 {% block content %}
-    <article class="post">
-        <aside class="actions">
-
-            <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
-                {% include './icons/pencil-fill.svg' %}
-            </a>
-
-            <a class="btn btn-secondary" href="{% url 'post_remove' pk=post.pk %}">
-                {% include './icons/clipboard-x.svg' %}
-            </a>
-
-            {% if post.published_date %}
-                <time class="date">
-                    {{ post.published_date }}
-                </time>
-            {% endif %}
-            <h2>{{ post.title }}</h2>
-            <a href="{{ post.link }}">{{ post.link }}</a>
+    <div class="row">
+        <div class="blog-post">
+            <h2 class="blog-post-title">{{ post.title }}</h2>
+            <p class="blog-post-meta"> {{ post.published_date }}4 by <a href="#"> {{ post.author }}</a></p>
+            <p>
+                <a href="{{ post.link }}">{{ post.link }}</a>
+            </p>
             <p>{{ post.text|linebreaksbr }}</p>
-        </aside>
-    </article>
-    <hr>
-
-    <a class="btn btn-default" href="comment/">Add comment</a>
-
-    {% for comment in post.comments.all %}
-        <div class="comment">
-            <div class="date">{{ comment.created_date }}</div>
-            <strong>{{ comment.author }}</strong>
-            <p>{{ comment.text|linebreaks }}</p>
         </div>
-    {% endfor %}
+        {% if request.user.id == post.author_id %}
+            <div>
+                <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
+                    {% include './icons/pencil-fill.svg' %}
+                </a>
 
-    {% if not post.comments.all %}
-        <p>There is no comment under this post... :(</p>
-    {% endif %}
+                <a class="btn btn-secondary" href="{% url 'post_remove' pk=post.pk %}">
+                    {% include './icons/clipboard-x.svg' %}
+                </a>
+            </div>
+        {% endif %}
+        <div>
+            <a class="btn btn-default" href="comment/">Add comment</a>
+        </div>
+        <div>
+            {% for comment in post.comments.all %}
+                <div class="d-flex text-muted pt-3">
+                    <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                         xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                         preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#007bff"></rect>
+                        <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
+                    </svg>
+
+                    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+
+                        <strong class="d-block text-gray-dark">by {{ comment.author.user.username }} </strong>
+                        <span class="text-muted">{{ comment.created_date }}</span>
+                        <div class="text-dark">
+                            {{ comment.text }}
+                        </div>
+                    </div>
+                </div>
+                {#                <div class="comment">#}
+                {#                    <div class="date">{{ comment.created_date }}</div>#}
+                {#                    <strong>{{ comment.author.first_name }}</strong>#}
+                {#                    <p>{{ comment.text|linebreaks }}</p>#}
+                {#                </div>#}
+            {% endfor %}
+
+            {% if not post.comments.all %}
+                <p>There is no comment under this post... :(</p>
+            {% endif %}
+
+        </div>
+    </div>
+
+    {#    <article class="post">#}
+    {#        <aside class="actions">#}
+    {##}
+    {#            <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">#}
+    {#                {% include './icons/pencil-fill.svg' %}#}
+    {#            </a>#}
+    {##}
+    {#            <a class="btn btn-secondary" href="{% url 'post_remove' pk=post.pk %}">#}
+    {#                {% include './icons/clipboard-x.svg' %}#}
+    {#            </a>#}
+    {##}
+    {#            {% if post.published_date %}#}
+    {#                <time class="date">#}
+    {#                    {{ post.published_date }}#}
+    {#                </time>#}
+    {#            {% endif %}#}
+    {#            <h2>{{ post.title }}</h2>#}
+    {#            <a href="{{ post.link }}">{{ post.link }}</a>#}
+    {#            <p>{{ post.text|linebreaksbr }}</p>#}
+    {#        </aside>#}
+    {#    </article>#}
+    {##}
+    {#    <a class="btn btn-default" href="comment/">Add comment</a>#}
+    {##}
+    {#    {% for comment in post.comments.all %}#}
+    {#        <div class="comment">#}
+    {#            <div class="date">{{ comment.created_date }}</div>#}
+    {#            <strong>{{ comment.author.first_name }}</strong>#}
+    {#            <p>{{ comment.text|linebreaks }}</p>#}
+    {#        </div>#}
+    {#    {% endfor %}#}
+    {##}
+    {#    {% if not post.comments.all %}#}
+    {#        <p>There is no comment under this post... :(</p>#}
+    {#    {% endif %}#}
+    {##}
+    {##}
 
 
 {% endblock %}>
-

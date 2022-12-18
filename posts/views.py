@@ -64,6 +64,9 @@ def add_comment_to_post(request, pk):
         if form.is_valid():
 
             comment = form.save(commit=False)
+
+            print('##########' + str(request.user.author.id))
+            comment.author_id = request.user.author.id
             comment.post = post
             comment.save()
             return redirect('post_detail', pk=post.pk)

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+
+from posts.models import Author
 from .forms import NewUserForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -38,6 +40,14 @@ def register_request(request):
         form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
+
+            a = Author()
+            a.user_id = user.id
+            a.email = user.email
+            a.first_name = "test"
+            a.last_name = "hehehe"
+            a.save()
+
             login(request, user)
             messages.success(request, "Registration successful.")
             return redirect("/")

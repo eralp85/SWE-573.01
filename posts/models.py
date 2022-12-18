@@ -26,19 +26,6 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-class Comment(models.Model):
-    post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='comments')
-    author = models.CharField(max_length=200, null=True)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    approved_comment = models.BooleanField(default=False)
-
-    def approve(self):
-        self.approved_comment = True
-        self.save()
-
-    def __str__(self):
-        return self.text
 
 
 class Author(models.Model):
@@ -52,3 +39,23 @@ class Author(models.Model):
 
     def __str__(self):
         return self.user
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+
+
+class Comment(models.Model):
+    post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='comments')
+    author = models.OneToOneRel(field_name='author_id', to='Author.id', field= 'none',  on_delete=models.CASCADE)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    approved_comment = models.BooleanField(default=False)
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+    def __str__(self):
+        return self.text
