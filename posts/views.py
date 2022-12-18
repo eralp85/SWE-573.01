@@ -84,4 +84,9 @@ def search (request):
         return render(request, 'posts/search.html', {})
 
 def my_research(request):
+
     return render(request, 'posts/my_research.html')
+
+def my_profile(request):
+
+    return render(request, 'posts/my_profile.html')

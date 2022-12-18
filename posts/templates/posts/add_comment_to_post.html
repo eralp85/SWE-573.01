@@ -1,14 +1,33 @@
-<div data-gb-custom-block data-tag="extends" data-0='blog/base.html'></div>
+{% extends 'posts/base.html' %}
 
-<div data-gb-custom-block data-tag="block"></div>
+{% block content %}
 
-    <h1>New comment</h1>
-    <form method="POST" class="post-form">
-
-<div data-gb-custom-block data-tag="csrf_token">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Send</button>
-    </form>
 
-</div>
+        <div class="mb-3">
+            <label for="Author" class="form-label">Author:</label>
+            <input name="Author" type="Author" class="form-control" id="exampleAuthor" aria-describedby="AuthorHelp">
+            <div id="AuthorHelp" class="form-text">Provide a Title</div>
+        </div>
+
+             <br>
+        <p>
+            <label for="id_text">Text:</label>
+            <textarea name="text" cols="40" rows="10" required="" id="id_text" data-gramm="false"
+                      wt-ignore-input="true"></textarea>
+        </p>
+
+
+        <button type="submit" class="btn btn-primary">Save</button>
+
+        {% if form.errors %}
+            <ul>
+                {% for error in form.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+    {% endif %}
+
+
+{% endblock %}

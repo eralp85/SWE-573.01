@@ -54,9 +54,16 @@
         <tbody>
         <tr>
             <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td>{{ post.title }}</td>
+            <td>{{ post.link }}</td>
+            <td>{{ post.tags }}</td>
+            <td>{{ post.labels }}</td>
+            <td>{{ post.uploads }}</td>
+            <td>
+                <button type="button" class="btn btn-outline-warning">Edit</button>
+                <button type="button" class="btn btn-outline-danger">Delete</button>
+                <button type="button" class="btn btn-outline-success">Comment</button>
+            </td>
         </tr>
         <tr>
             <th scope="row">2</th>
