@@ -12,17 +12,20 @@
         </div>
         {% if request.user.id == post.author_id %}
             <div>
-                <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
+                <a class="btn btn-outline-warning" href="{% url 'post_edit' pk=post.pk %}">
                     {% include './icons/pencil-fill.svg' %}
                 </a>
 
-                <a class="btn btn-secondary" href="{% url 'post_remove' pk=post.pk %}">
+                <a class="btn btn-outline-danger" href="{% url 'post_remove' pk=post.pk %}">
                     {% include './icons/clipboard-x.svg' %}
                 </a>
+                <a href="{{ post.link }}" target="_blank" class="btn btn-outline-primary"> Goto> </a>
             </div>
         {% endif %}
+        <br>
         <div>
-            <a class="btn btn-default" href="comment/">Add comment</a>
+            <br>
+            <a class="btn btn-outline-success" href="comment/">Add comment</a>
         </div>
         <div>
             {% for comment in post.comments.all %}

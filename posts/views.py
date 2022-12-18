@@ -91,15 +91,15 @@ def my_research(request):
 
     return render(request, 'posts/my_research.html', {'posts': posts})
 
-def my_profile(request):
-    author = request.user.author
-    form = ProfileForm(instance=author)
-
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES,instance=author)
-        if form.is_valid():
-            form.save()
-
-
-    context = {'form' : form}
-    return render(request, 'posts/my_profile.html',context)
+def my_account(request):
+    # author = request.user.author
+    # form = ProfileForm(instance=author)
+    #
+    # if request.method == 'POST':
+    #     form = ProfileForm(request.POST, request.FILES,instance=author)
+    #     if form.is_valid():
+    #         form.save()
+    #
+    #
+    # context = {'form' : form}
+    return render(request, 'posts/my_account.html')

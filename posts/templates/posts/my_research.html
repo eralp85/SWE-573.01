@@ -55,11 +55,12 @@
             <tr>
                 <th scope="row">{{ post.id }}</th>
                 <td>{{ post.title }}</td>
-                <td>{{ post.link }}</td>
+                <td>{{ post.link }} </td>
                 <td>{{ post.tags }}</td>
                 <td>{{ post.labels }}</td>
                 <td title="{{ post.text|slice:"0:200" }}">{{ post.text|slice:"0:10" }}...</td>
                 <td>
+                    <a href="{{ post.link }}" target="_blank" class="btn btn-outline-primary"> Goto> </a>
                     <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-outline-warning">Edit</a>
                     <a href="{% url 'post_remove' pk=post.pk %}" class="btn btn-outline-danger">Delete</a>
                     <a href="{% url 'add_comment_to_post' pk=post.pk %}" class="btn btn-outline-success">Comment</a>
