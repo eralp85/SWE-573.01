@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from .models import Post
 from django.shortcuts import render, get_object_or_404
-from .forms import PostForm,CommentForm
+from .forms import PostForm,CommentForm,ProfileForm
 from django.shortcuts import redirect
 from django.db.models import Q
 
@@ -88,5 +88,14 @@ def my_research(request):
     return render(request, 'posts/my_research.html')
 
 def my_profile(request):
+    author = request.user.author
+    form = ProfileForm(instance=author)
 
-    return render(request, 'posts/my_profile.html')
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES,instance=author)
+        if form.is_valid():
+            form.save()
+
+
+    context = {'form' : form}
+    return render(request, 'posts/my_profile.html',context)
