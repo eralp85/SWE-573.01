@@ -103,3 +103,6 @@ def my_account(request):
     #
     # context = {'form' : form}
     return render(request, 'posts/my_account.html')
+
+def faq(request):
+    return render(request, 'posts/faq.html')
