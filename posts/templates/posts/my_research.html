@@ -61,8 +61,10 @@
                 <td title="{{ post.text|slice:"0:200" }}">{{ post.text|slice:"0:10" }}...</td>
                 <td>
                     <a href="{{ post.link }}" target="_blank" class="btn btn-outline-primary"> Goto> </a>
-                    <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-outline-warning">Edit</a>
-                    <a href="{% url 'post_remove' pk=post.pk %}" class="btn btn-outline-danger">Delete</a>
+                    {% if request.user.id == post.author_id %}
+                        <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-outline-warning">Edit</a>
+                        <a href="{% url 'post_remove' pk=post.pk %}" class="btn btn-outline-danger">Delete</a>
+                    {% endif %}
                     <a href="{% url 'add_comment_to_post' pk=post.pk %}" class="btn btn-outline-success">Comment</a>
                 </td>
             </tr>
