@@ -106,3 +106,19 @@ def my_account(request):
 
 def faq(request):
     return render(request, 'posts/faq.html')
+
+def macro_economy(request):
+    posts = Post.objects.filter(labels__contains='Macro')
+    return render(request, 'posts/my_research.html', {'posts': posts})
+
+def equity(request):
+    posts = Post.objects.filter(labels__contains='Equity')
+    return render(request, 'posts/my_research.html', {'posts': posts})
+
+def fixed_income(request):
+    posts = Post.objects.filter(labels__contains='Fixed')
+    return render(request, 'posts/my_research.html', {'posts': posts})
+
+def company_news(request):
+    posts = Post.objects.filter(labels__contains='company')
+    return render(request, 'posts/my_research.html', {'posts': posts})

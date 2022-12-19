@@ -15,6 +15,9 @@ urlpatterns = [
     path('myresearch/', views.my_research, name='my_research'),
     path('myaccount/', views.my_account, name='my_account'),
     path('faq/', views.faq, name='faq'),
-
+    path('macro_economy/', views.macro_economy, name='macro_economy'),
+    path('equity/', views.equity, name='equity'),
+    path('fixed_income/', views.fixed_income, name='fixed_income'),
+    path('company_news/', views.company_news, name='company_news'),
 
 ]
