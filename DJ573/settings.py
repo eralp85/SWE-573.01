@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     'authenticator',
     'crispy_forms',
     'users_',
-
-
 ]
 
 
@@ -87,7 +85,7 @@ DATABASES = {
         'NAME': 'django',
         'USER': 'django',
         'PASSWORD': 'django',
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': '3306',
     }
 }

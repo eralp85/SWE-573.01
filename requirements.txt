@@ -1,4 +1,4 @@
-asgiref==3.5.2
+asgiref==3.2.10
 django==3.1.1
 pip==21.3.1
 setuptools==60.2.0
@@ -7,4 +7,4 @@ tzdata==2022.6
 wheel==0.37.1
 django-crispy-forms
 mysqlclient
-
+Pillow==9.3.0
