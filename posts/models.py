@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -8,6 +10,10 @@ from django.contrib.auth.models import User
 
 
 class Post(models.Model):
+    STATUS_CHOICES = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    )
     author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, blank=True)
     link = models.CharField(max_length=200, null='True', blank='True', unique='False')
@@ -17,7 +23,12 @@ class Post(models.Model):
     upload = models.FileField(upload_to='uploads/', null='True', blank='True', unique='False')
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(max_length=10,
+                              choices=STATUS_CHOICES,
+                              default='draft')
 
+    class Meta:
+        ordering = ('-published_date',)
 
     def publish(self):
         self.published_date = timezone.now()
