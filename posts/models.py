@@ -16,17 +16,17 @@ class Post(models.Model):
     )
     author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, blank=True)
-    link = models.CharField(max_length=200, null='True', blank='True', unique='False')
-    tags = models.CharField(max_length=200, blank=True)
+    link = models.CharField(max_length=200, null=True, blank=True, unique=False)
+    tags = TaggableManager()
     labels = models.CharField(max_length=200, blank=True)
     text = models.CharField(max_length=2000, blank=True)
-    upload = models.FileField(upload_to='uploads/', null='True', blank='True', unique='False')
+    upload = models.FileField(upload_to='uploads/', null=True, blank=True, unique=False)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=10,
                               choices=STATUS_CHOICES,
-                              default='draft')
-    tag = TaggableManager()
+                              default='published')
+
 
 
     class Meta:

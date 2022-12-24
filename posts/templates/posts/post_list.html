@@ -14,8 +14,21 @@
                         <a href="/post/{{ post.id }}" class="text-decoration-none">
                             <h3 class="text-overflow" title="{{ post.title }}">{{ post.title }}</h3>
                         </a>
-                        <p class="tags">Tags: {{ post.tag.all|join:", " }}</p>
+
+
+
                         <p class="card-text card-summary">{{ post.text|linebreaksbr }}</p>
+
+                        <p class="tags">
+                            Tags:
+                            {% for tag in post.tags.all %}
+                                <a href="{% url "post_list_by_tag" tag.slug %}">
+                                    {{ tag.name }}
+                                </a>
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
 
