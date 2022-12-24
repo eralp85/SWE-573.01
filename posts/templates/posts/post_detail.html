@@ -9,10 +9,14 @@
                 <a href="{{ post.link }}">{{ post.link }}</a>
             </p>
             <p>{{ post.text|linebreaksbr }}</p>
+
         </div>
         {% if request.user.id == post.author_id %}
             <div>
-                <a class="btn btn-outline-warning" href="{% url 'post_edit' pk=post.pk %}">
+
+                <a href="{% url 'post_share' pk=post.id %}">Share this post </a>
+
+                <a class="btn btn-outline-warning" href="{% url 'post_edit' pk=post.id %}">
                     {% include './icons/pencil-fill.svg' %}
                 </a>
 

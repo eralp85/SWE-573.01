@@ -1,5 +1,5 @@
 from typing import Any
-
+from django.urls import reverse
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -37,7 +37,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-
+    def get_absolute_url(self):
+        return reverse('post:post_detail',
+                       args=[self.id])
 
 class Author(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)

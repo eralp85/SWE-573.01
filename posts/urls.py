@@ -19,5 +19,5 @@ urlpatterns = [
     path('equity/', views.equity, name='equity'),
     path('fixed_income/', views.fixed_income, name='fixed_income'),
     path('company_news/', views.company_news, name='company_news'),
-
+    path('post/<int:pk>/share/', views.post_share, name='post_share'),
 ]
