@@ -4,7 +4,7 @@
     <div class="row">
         <div class="blog-post">
             <h2 class="blog-post-title">{{ post.title }}</h2>
-            <p class="blog-post-meta"> {{ post.published_date }}4 by <a href="#"> {{ post.author }}</a></p>
+            <p class="blog-post-meta"> {{ post.published_date }} by <a href="#"> {{ post.author }}</a></p>
             <p>
                 <a href="{{ post.link }}">{{ post.link }}</a>
             </p>
@@ -13,7 +13,6 @@
         </div>
         {% if request.user.id == post.author_id %}
             <div>
-
 
 
                 <a class="btn btn-outline-warning" href="{% url 'post_edit' pk=post.id %}">
@@ -34,6 +33,7 @@
         </div>
         <div>
             {% for comment in post.comments.all %}
+
                 <div class="d-flex text-muted pt-3">
                     <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
                          xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
@@ -42,14 +42,26 @@
                         <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
                     </svg>
 
-                    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    {% with comments.count as total_comments %}
+                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
 
-                        <strong class="d-block text-gray-dark">by {{ comment.author.user.username }} </strong>
+                        <span>
+                            {{ total_comments }} comment{{ total_comments|pluralize }}
+                        </span>
+                        <p class="info">
+                            Comment {{ forloop.counter }} by {{ comments.user }}
+                            {{ comment.created }}
+                        </p>
+                        {{ comment.body|linebreaks }}
+                        <strong class="d-block text-gray-dark">by {{ comment.Author.id }} </strong>
                         <span class="text-muted">{{ comment.created_date }}</span>
                         <div class="text-dark">
                             {{ comment.text }}
+
                         </div>
+                    {% endwith %}
                     </div>
+
                 </div>
                 {#                <div class="comment">#}
                 {#                    <div class="date">{{ comment.created_date }}</div>#}

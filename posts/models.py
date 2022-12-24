@@ -66,9 +66,17 @@ class Comment(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)
 
+
+    class Meta:
+        ordering = ('created_date',)
+        indexes = [
+            models.Index(fields=['created_date']),]
+
+
     def approve(self):
         self.approved_comment = True
         self.save()
 
     def __str__(self):
         return self.text
+        return f'Comment by {self.name} on {self.post}'

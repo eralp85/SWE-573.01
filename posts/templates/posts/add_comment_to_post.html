@@ -7,13 +7,12 @@
 
         <div class="mb-3">
             <label for="Author" class="form-label">Author:</label>
-                        <h4>{{ user.username }}</h4>
+            <h4>{{ user.username }}</h4>
 
-            <!--input name="author_id" type="text" value="{{ request.user.author.id }}" />
-            <div id="AuthorHelp" class="form-text">Provide a Title</div -->
+
         </div>
 
-             <br>
+        <br>
         <p>
             <label for="id_text">Text:</label>
             <textarea name="text" cols="40" rows="10" required="" id="id_text" data-gramm="false"
@@ -29,7 +28,7 @@
                     <li>{{ error }}</li>
                 {% endfor %}
             </ul>
-    {% endif %}
+        {% endif %}
 
 
 {% endblock %}
