@@ -20,4 +20,7 @@ urlpatterns = [
     path('fixed_income/', views.fixed_income, name='fixed_income'),
     path('company_news/', views.company_news, name='company_news'),
     path('post/<int:pk>/share/', views.post_share, name='post_share'),
+    path('tag/<slug:tag_slug>/', views.post_list, name='post_list_by_tag'),
+
+
 ]

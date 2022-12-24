@@ -4,7 +4,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import User
-
+from taggit.managers import TaggableManager
 
 # Create your models here.
 
@@ -26,6 +26,8 @@ class Post(models.Model):
     status = models.CharField(max_length=10,
                               choices=STATUS_CHOICES,
                               default='draft')
+    tag = TaggableManager()
+
 
     class Meta:
         ordering = ('-published_date',)

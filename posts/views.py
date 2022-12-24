@@ -7,13 +7,20 @@ from .forms import PostForm,CommentForm,ProfileForm, EmailPostForm
 from django.shortcuts import redirect
 from django.db.models import Q
 from django.core.mail import send_mail
+from taggit.models import Tag
 
 # Create your views here.
 
 @login_required
-def post_list(request):
+def post_list(request, tag_slug=None):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    return render(request, 'posts/post_list.html', {'posts': posts})
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = posts.filter(tags__in=[tag])
+
+    return render(request, 'posts/post_list.html', {'posts': posts, 'tag': tag})
 
 @login_required
 def post_detail(request, pk):
