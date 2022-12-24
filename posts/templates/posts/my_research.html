@@ -60,6 +60,7 @@
                 <td>{{ post.labels }}</td>
                 <td title="{{ post.text|slice:"0:200" }}">{{ post.text|slice:"0:10" }}...</td>
                 <td>
+                    <a href="{% url 'post_share' pk=post.id %}" class="btn btn-outline-dark">Share this post </a>
                     <a href="{{ post.link }}" target="_blank" class="btn btn-outline-primary"> Goto> </a>
                     {% if request.user.id == post.author_id %}
                         <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-outline-warning">Edit</a>

@@ -15,6 +15,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
 
+                                <a class="btn btn-outline-dark" href="{% url 'post_share' pk=post.id %}">Share this post </a>
 
                                 <a href="/post/{{ post.id }}/comment/" class="btn btn-outline-success">
                                     Comment> </a>

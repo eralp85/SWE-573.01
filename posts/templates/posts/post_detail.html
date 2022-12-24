@@ -14,7 +14,7 @@
         {% if request.user.id == post.author_id %}
             <div>
 
-                <a href="{% url 'post_share' pk=post.id %}">Share this post </a>
+
 
                 <a class="btn btn-outline-warning" href="{% url 'post_edit' pk=post.id %}">
                     {% include './icons/pencil-fill.svg' %}
@@ -30,6 +30,7 @@
         <div>
             <br>
             <a class="btn btn-outline-success" href="comment/">Add comment</a>
+            <a class="btn btn-outline-dark" href="{% url 'post_share' pk=post.id %}">Share this post </a>
         </div>
         <div>
             {% for comment in post.comments.all %}
