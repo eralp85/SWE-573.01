@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from .forms import NewUserForm, UserEditForm, ProfileEditForm
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import auth
 from django.contrib import messages
 from pprint import pprint
 from .models import Profile
-
+from django.contrib.auth.decorators import login_required
 # HTTPresponse
 from django.http import HttpResponse
 # Create your views here.
@@ -13,7 +14,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 def login_request(request):
     if request.user.is_authenticated:
-        return redirect("/")
+        return redirect("/home")
     """ REDIRECT IF USER ALREADY LOGGED IN """
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -24,7 +25,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are logged in as {username}. Welcome!")
-                return redirect("/")
+                return redirect("/home")
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -61,12 +62,13 @@ def register_request(request):
 
 
 def logout_request(request):
-    if not request.user.is_authenticated:
-        return redirect("/")
-
-    logout(request)
-    messages.info(request, "Logged out successfully!")
-    return redirect("/")
+    # if not request.user.is_authenticated:
+    #     return redirect("/")
+    #
+    # logout(request)
+    # messages.info(request, "Logged out successfully!"),
+    auth.logout(request)
+    return redirect("login")
 
 
 def edit(request):

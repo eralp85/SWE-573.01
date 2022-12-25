@@ -4,8 +4,8 @@
     <div class="row">
         <div class="blog-post">
             <h2 class="blog-post-title">{{ post.title }}</h2>
-            {% if tag %}
-                <h2>Posts tagged with "{{ tag.name }}"</h2>
+            {% if post.tags %}
+                <h2>Posts tagged with "{{ post.tags }}"</h2>
             {% endif %}
             <p class="blog-post-meta"> {{ post.published_date }} by <a href="#"> {{ post.author }}</a></p>
             <p>

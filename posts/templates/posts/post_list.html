@@ -2,8 +2,8 @@
 
 {% block content %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
-        {% if tag %}
-            <h2>Posts tagged with "{{ tag.name }}"</h2>
+        {% if post.tags %}
+            <h2>Posts tagged with "{{ post.tags }}"</h2>
         {% endif %}
         {% for post in posts %}
             <div class="col">
