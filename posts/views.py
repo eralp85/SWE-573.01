@@ -1,13 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Post, Comment
+from .models import *
 from django.shortcuts import render, get_object_or_404
-from .forms import PostForm,CommentForm,ProfileForm, EmailPostForm
+from .forms import PostForm, CommentForm, EmailPostForm
 from django.shortcuts import redirect
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.core.mail import send_mail
 from taggit.models import Tag
+
 
 # Create your views here.
 
@@ -20,12 +21,21 @@ def post_list(request, tag_slug=None):
         tag = get_object_or_404(Tag, slug=tag_slug)
         posts = posts.filter(tags__in=[tag])
 
+
     return render(request, 'posts/post_list.html', {'posts': posts, 'tag': tag})
+
 
 @login_required
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk= pk)
+    post = get_object_or_404(Post, pk=pk)
     comments = post.comments
+
+    # post_tags_ids = post.tags.values_list('id', flat=True)
+    # similar_posts = Post.created_date.filter(tags__in=post_tags_ids) \
+    #     .exclude(id=post.id)
+    # similar_posts = similar_posts.annotate(same_tags=Count('tags')) \
+    #                     .order_by('-same_tags', '-created_date')[:4]
+
     return render(request, 'posts/post_detail.html', {'post': post, 'comments': comments})
 
 @login_required
@@ -43,6 +53,7 @@ def post_new(request):
         form = PostForm()
     return render(request, 'posts/post_edit.html', {'form': form})
 
+
 @login_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -58,11 +69,13 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'posts/post_edit.html', {'form': form})
 
+
 @login_required
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect('post_list')
+
 
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -75,24 +88,29 @@ def add_comment_to_post(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = CommentForm()
+    # List of similar posts
+
     return render(request, 'posts/add_comment_to_post.html', {'form': form})
 
-def search (request):
+
+def search(request):
     if request.method == "POST":
         searched = request.POST['searched']
         searched = searched.lower()
         posts_s_ = Post.objects.filter(Q(title__icontains=searched) | Q(text__icontains=searched))
 
-        #posts_s_ = Post.objects.filter(title__contains=searched | text__contains=searched)
+        # posts_s_ = Post.objects.filter(title__contains=searched | text__contains=searched)
 
         return render(request, 'posts/search.html', {'searched': searched, 'posts_s_': posts_s_})
     else:
         return render(request, 'posts/search.html', {})
 
+
 def my_research(request):
     posts = Post.objects.filter(author_id=request.user.id).order_by('published_date')
 
     return render(request, 'posts/my_research.html', {'posts': posts})
+
 
 def my_account(request):
     # author = request.user.author
@@ -107,20 +125,25 @@ def my_account(request):
     # context = {'form' : form}
     return render(request, 'posts/my_account.html')
 
+
 def faq(request):
     return render(request, 'posts/faq.html')
+
 
 def macro_economy(request):
     posts = Post.objects.filter(labels__contains='Macro')
     return render(request, 'posts/my_research.html', {'posts': posts})
 
+
 def equity(request):
     posts = Post.objects.filter(labels__contains='Equity')
     return render(request, 'posts/my_research.html', {'posts': posts})
 
+
 def fixed_income(request):
     posts = Post.objects.filter(labels__contains='Fixed')
     return render(request, 'posts/my_research.html', {'posts': posts})
+
 
 def company_news(request):
     posts = Post.objects.filter(labels__contains='company')

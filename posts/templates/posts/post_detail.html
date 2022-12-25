@@ -44,7 +44,21 @@
             <br>
             <a class="btn btn-outline-success" href="comment/">Add comment</a>
             <a class="btn btn-outline-dark" href="{% url 'post_share' pk=post.id %}">Share this post </a>
+
         </div>
+
+
+{#        <div>#}
+{#            <br>#}
+{#            <h2>Similar posts</h2>#}
+{#            {% for post in similar_posts %}#}
+{#                <p>#}
+{#                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>#}
+{#                </p>#}
+{#            {% empty %}#}
+{#                There are no similar posts yet.#}
+{#            {% endfor %}#}
+{#        </div>#}
         <div>
             {% for comment in post.comments.all %}
 
@@ -88,9 +102,8 @@
                 <p>There is no comment under this post... :(</p>
             {% endif %}
 
+
         </div>
     </div>
-
-
 
 {% endblock %}>

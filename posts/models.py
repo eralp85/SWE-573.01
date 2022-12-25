@@ -43,21 +43,21 @@ class Post(models.Model):
         return reverse('post_detail',
                        args=[self.id])
 
-class Author(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50, null=True)
-    last_name = models.CharField(max_length=50, null=True)
-    phone = models.CharField(max_length=15, null=True,blank=True)
-    email = models.CharField(max_length=50, null=True)
-    profile_pic = models.ImageField(default="blank-profile-photo.jpeg", null=True, blank=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-
-    def __str__(self):
-        return self.user
-
-    def approve(self):
-        self.approved_comment = True
-        self.save()
+# class Author(models.Model):
+#     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+#     first_name = models.CharField(max_length=50, null=True)
+#     last_name = models.CharField(max_length=50, null=True)
+#     phone = models.CharField(max_length=15, null=True,blank=True)
+#     email = models.CharField(max_length=50, null=True)
+#     profile_pic = models.ImageField(upload_to='users/%Y/%m/%d', default="blank-profile-photo.jpeg", null=True, blank= True)
+#     date_created = models.DateTimeField(auto_now_add=True, null=True)
+#
+#     def __str__(self):
+#         return f'Profile for user {self.user.username}'
+#
+#     def approve(self):
+#         self.approved_comment = True
+#         self.save()
 
 
 

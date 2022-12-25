@@ -22,4 +22,10 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('author', 'post', 'text')
 
 
-admin.site.register(Author)
+# admin.site.register(Author)
+#
+#
+# class AuthorAdmin(admin.ModelAdmin):
+#     list_display = ['user', 'date_of_birth', 'photo']
+
+

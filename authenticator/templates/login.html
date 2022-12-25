@@ -4,11 +4,15 @@
 
     {% load crispy_forms_tags %}
 
+    <div>
+    <
+
+    </div>
     <!--Login-->
     <div class="container py-5">
         <div class="row">
             <div class="col-sm-4 mx-auto bg-white rounded-2">
-                <h1>Login</h1>
+                <h1>Log_in</h1>
                 <!-- Messages -->
                 {% if messages %}
                     {% for message in messages %}
@@ -43,7 +47,7 @@
                 </form>
                      </div>
 
-                <p class="text-center my-3">Forgot Your Password? <a href="/register">Get Password</a>.</p>
+                <p class="text-center my-3">Forgot Your Password? <a href="{% url 'password_reset' %}">Get Password</a>.</p>
             </div>
 
 

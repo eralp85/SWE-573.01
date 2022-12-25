@@ -1,0 +1,12 @@
+.bg-danger{
+    background-color: #CC0000 !important;
+}
+.card-summary{
+    height: 120px;
+    overflow: hidden;
+}
+.text-overflow{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}

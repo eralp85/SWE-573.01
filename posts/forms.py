@@ -14,11 +14,11 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('text',)
 
-class ProfileForm(forms.ModelForm):
-
-    class Meta:
-        model = Author
-        fields = '__all__'
+# class ProfileForm(forms.ModelForm):
+#
+#     class Meta:
+#         model = Author
+#         fields = '__all__'
 
 
 class EmailPostForm(forms.Form):
@@ -26,3 +26,15 @@ class EmailPostForm(forms.Form):
     email = forms.EmailField()
     to = forms.EmailField()
     comments = forms.CharField(required=False, widget=forms.Textarea)
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+
+
+# class AuthorEditForm(forms.ModelForm):
+#     class Meta:
+#         model = Author
+#         fields = ('email', 'profile_pic')
