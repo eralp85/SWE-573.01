@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'users_',
     'taggit',
+    'thumbnail',
+    'easy_thumbnails',
+
 
 ]
 
@@ -82,33 +85,33 @@ WSGI_APPLICATION = 'DJ573.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-        'NAME': "postgres",
-
-        'USER': "postgres",
-
-        'PASSWORD': "postgres",
-
-        'HOST': '127.0.0.1',
-
-        'PORT': "5432",
-    },
     # 'default': {
-    #
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #
-    #     'NAME': 'postgres',
+    #     'NAME': "postgres",
     #
-    #     'USER': 'postgres',
+    #     'USER': "postgres",
     #
-    #     'PASSWORD': 'postgres',
+    #     'PASSWORD': "postgres",
     #
-    #     'HOST': 'db',  # For containers
+    #     'HOST': '127.0.0.1',
     #
-    #     'PORT': '5432',
+    #     'PORT': "5432",
     # },
+    'default': {
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': 'postgres',
+
+        'USER': 'postgres',
+
+        'PASSWORD': 'postgres',
+
+        'HOST': 'db',  # For containers
+
+        'PORT': '5432',
+    },
 }
 
 
@@ -168,3 +171,13 @@ EMAIL_HOST_USER = 'swebogazici@gmail.com'
 EMAIL_HOST_PASSWORD = 'Eralp1985!'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+from django.urls import reverse_lazy
+
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail',
+                                        args=[u.username])
+}
+

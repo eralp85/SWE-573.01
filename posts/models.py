@@ -5,6 +5,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 
@@ -43,24 +44,6 @@ class Post(models.Model):
         return reverse('post_detail',
                        args=[self.id])
 
-# class Author(models.Model):
-#     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
-#     first_name = models.CharField(max_length=50, null=True)
-#     last_name = models.CharField(max_length=50, null=True)
-#     phone = models.CharField(max_length=15, null=True,blank=True)
-#     email = models.CharField(max_length=50, null=True)
-#     profile_pic = models.ImageField(upload_to='users/%Y/%m/%d', default="blank-profile-photo.jpeg", null=True, blank= True)
-#     date_created = models.DateTimeField(auto_now_add=True, null=True)
-#
-#     def __str__(self):
-#         return f'Profile for user {self.user.username}'
-#
-#     def approve(self):
-#         self.approved_comment = True
-#         self.save()
-
-
-
 class Comment(models.Model):
     post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='comments')
     author = models.OneToOneRel(field_name='author_id', to='Author.id', field= 'none',  on_delete=models.CASCADE)
@@ -82,3 +65,27 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
         return f'Comment by {self.name} on {self.post}'
+
+
+class Contact(models.Model):
+    user_from = models.ForeignKey('auth.User',
+                                  related_name='rel_from_set',
+                                  on_delete=models.CASCADE)
+    user_to = models.ForeignKey('auth.User',
+                                related_name='rel_to_set',
+                                on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True,
+                                   db_index=True)
+    class Meta:
+        ordering = ('-created',)
+    def __str__(self):
+        return f'{self.user_from} follows {self.user_to}'
+
+
+# Add following field to User dynamically
+user_model = get_user_model()
+user_model.add_to_class('following',
+                        models.ManyToManyField('self',
+                                                through=Contact,
+                                                related_name='followers',
+                                                symmetrical=False))
