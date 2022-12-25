@@ -82,11 +82,21 @@ WSGI_APPLICATION = 'DJ573.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    ### FOR LOCAL RUN
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'django',
+    #     'USER': 'django',
+    #     'PASSWORD': 'django',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '3306',
+    # }
+    #### for cloud
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django',
-        'USER': 'django',
-        'PASSWORD': 'django',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': 'db',
         'PORT': '3306',
     }

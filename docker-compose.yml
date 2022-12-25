@@ -1,37 +1,28 @@
-version: "3.3"
+version: "3.8"
 
 services:
   db:
-    image: mysql:5.7
+    image: mysql:latest
     environment:
-      MYSQL_HOST: localhost
-      MYSQL_PORT: 3306  # cannot change this port to other number
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: django
-      MYSQL_USER: django
-      MYSQL_PASSWORD: django
+      MYSQL_DATABASE: 'django'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
     ports:
       - "3306:3306"
     volumes:
-      - db_data:/var/lib/mysql
-    expose:
-      # Opens port 3306 on the container
-      - '3306'
+      - ./data/mysql/db:/var/lib/mysql
   app:
-      build:
-        context: .
-      restart: always
-      ports:
-        - "8000:8000"
-      command: >
-        sh -c "sleep 15 &&
-               python manage.py makemigrations &&
-               python manage.py migrate &&           
-               python manage.py runserver 0.0.0.0:8000"
-      depends_on:
-        - db
-      volumes:
-        - .:/app/
-
-volumes:
-  db_data:
+    build: .
+    volumes:
+      - ./:/app
+    restart: always
+    image: app:latest
+    container_name: swe573
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "sleep 15 &&
+             python manage.py makemigrations &&
+             python manage.py migrate &&           
+             python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
