@@ -1,11 +1,15 @@
-FROM python:3.7.3
-ENV PYTHONUNBUFFERED 1
+FROM python:3.8
 
-WORKDIR /SWE-573.01
+ENV PYTHONBUFFERED 1
 
-COPY requirements.txt .
+WORKDIR /app
+
+COPY requirements.txt /app/
 
 RUN pip install --upgrade pip
+
 RUN pip install --upgrade setuptools
+
 RUN pip install ez_setup
+
 RUN pip install -r requirements.txt

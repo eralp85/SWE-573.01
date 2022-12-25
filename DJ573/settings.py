@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-0p=i90sg-d9_3(ccve2p*p-d(h*)eugun)te%-)m8qb=&(ekw9
 DEBUG = True
 
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0", "*"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -82,24 +82,33 @@ WSGI_APPLICATION = 'DJ573.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    ### FOR LOCAL RUN
     # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'django',
-    #     'USER': 'django',
-    #     'PASSWORD': 'django',
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #
+    #     'NAME': postgres,
+    #
+    #     'USER': postgres,
+    #
+    #     'PASSWORD': postgres,
+    #
     #     'HOST': '127.0.0.1',
-    #     'PORT': '3306',
-    # }
-    #### for cloud
+    #
+    #     'PORT': 5432,
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'db',
-        'PORT': '3306',
-    }
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': 'postgres',
+
+        'USER': 'postgres',
+
+        'PASSWORD': 'postgres',
+
+        'HOST': 'db',  # For containers
+
+        'PORT': '5432',
+    },
 }
 
 
