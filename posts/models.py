@@ -10,10 +10,10 @@ from taggit.managers import TaggableManager
 
 
 class Post(models.Model):
-    STATUS_CHOICES = (
-        ('draft', 'Draft'),
-        ('published', 'Published'),
-    )
+    # STATUS_CHOICES = (
+    #     ('draft', 'Draft'),
+    #     ('published', 'Published'),
+    # )
     author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, blank=True)
     link = models.CharField(max_length=200, null=True, blank=True, unique=False)
@@ -23,9 +23,9 @@ class Post(models.Model):
     upload = models.FileField(upload_to='uploads/', null=True, blank=True, unique=False)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    status = models.CharField(max_length=10,
-                              choices=STATUS_CHOICES,
-                              default='published')
+    # status = models.CharField(max_length=10,
+    #                           choices=STATUS_CHOICES,
+    #                           default='draft')
 
 
 

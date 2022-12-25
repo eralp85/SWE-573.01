@@ -4,11 +4,12 @@ from django.utils import timezone
 from .models import *
 from django.shortcuts import render, get_object_or_404
 from .forms import PostForm, CommentForm, EmailPostForm
+from authenticator.forms import UserEditForm, ProfileEditForm
 from django.shortcuts import redirect
 from django.db.models import Q, Count
 from django.core.mail import send_mail
 from taggit.models import Tag
-
+from authenticator.models import Profile
 
 # Create your views here.
 
@@ -173,3 +174,25 @@ def post_share(request, pk):
     else:
         form = EmailPostForm()
     return render(request, 'posts/share.html', {'post': post, 'form': form, 'sent': sent})
+
+def edit(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user,
+                                 data=request.POST)
+        profile_form = ProfileEditForm(
+                                    instance=request.user.profile,
+                                    data=request.POST,
+                                    files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Profile updated successfully')
+        else:
+            messages.error(request, 'Error updating your profile')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    return render(request, 'posts:my_account.html',
+                  {'user_form': user_form,
+                   'profile_form': profile_form},
+                  'posts:my_account.html')

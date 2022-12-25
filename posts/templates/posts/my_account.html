@@ -1,44 +1,78 @@
 {% extends 'posts/base.html' %}
 
+
+
 {% block content %}
 
-<style>
-    .profile.pic{
-    max-width: 200px;
-    max-height: 200px;
-    margin: 0 auto;
-    border-radius: 50%;
-    }
 
-</style>
 
-<br>
+    <style>
+        .profile.pic {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 0 auto;
+            border-radius: 50%;
+        }
 
-<div class="row">
-    <div class="col-md-3">
-        <div class="card card-body">
+    </style>
 
-            <a class="btn btn-warning " href="{%  url 'post_list' %}" > Back to Home
-            </a>
-            <hr>
-            <h3 style="text-align: center"> Account Settings</h3>
-            <hr>
-            <img class="profile-pic" src ="{{ request.user.author.profile_pic.url }}" >
+    <br>
 
+
+    <div>
+
+
+        <h1>Dashboard</h1>
+        <p>Welcome to your dashboard.</p>
+
+        <p>
+            You can <a href="{% url "edit" %}">edit your profile</a> or <a href="{% url "password_change" %}">change
+            your password</a>.</p>
+
+        </p>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card card-body">
+
+                <a class="btn btn-warning " href="{% url 'post_list' %}"> Back to Home
+                </a>
+                <hr>
+                <h3 style="text-align: center"> Account Settings</h3>
+                <hr>
+                <img class="profile-pic" src="{{ request.user.author.profile_pic.url }}">
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card card-body">
+
+                <form method="POST" action="" enctype="multipart/form-data">
+
+                    {% block title %}Edit your account{% endblock %}
+
+
+                    <h1>Edit your account</h1>
+                    <p>You can edit your account using the following form:</p>
+                    <form method="post" enctype="multipart/form-data">
+                        {{ user_form.as_p }}
+                        {{ profile_form.as_p }}
+                        {% csrf_token %}
+                        <p><input type="submit" value="Save changes"></p>
+                    </form>
+
+                    <input class="btn btn-primary" type="submit" name="update Information">
+
+                </form>
+            </div>
         </div>
     </div>
-    <div class="col-md-9">
-        <div class="card card-body">
 
-            <form method= "POST" action ="" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-            <input class = "btn btn-primary" type="submit" name="update Information">
 
-            </form>
-        </div>
-    </div>
-</div>
+
+
 
 
 {% endblock %}>

@@ -1,5 +1,7 @@
 from django import forms
 from .models import *
+from authenticator.forms import NewUserForm, UserEditForm, ProfileEditForm
+from authenticator.models import Profile
 
 
 class PostForm(forms.ModelForm):
@@ -34,7 +36,7 @@ class UserEditForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'email')
 
 
-# class AuthorEditForm(forms.ModelForm):
-#     class Meta:
-#         model = Author
-#         fields = ('email', 'profile_pic')
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('date_of_birth', 'photo')
