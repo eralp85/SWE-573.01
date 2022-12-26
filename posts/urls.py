@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from authenticator.views import *
+from .views import *
 
 urlpatterns = [
 
@@ -22,5 +23,7 @@ urlpatterns = [
     path('post/<int:pk>/share/', views.post_share, name='post_share'),
     path('tag/<slug:tag_slug>/', views.post_list, name='post_list_by_tag'),
     path("logout/", logout_request, name ="logout"),
+    path("like/<int:pk>", LikeView, name="like_post"),
+
 
 ]

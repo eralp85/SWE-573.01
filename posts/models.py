@@ -24,10 +24,14 @@ class Post(models.Model):
     upload = models.FileField(upload_to='uploads/', null=True, blank=True, unique=False)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
+    likes = models.ManyToManyField(User, related_name='blog_post')
+    title_tag = models.CharField(max_length=200, null=True, blank=True, unique=False)
     # status = models.CharField(max_length=10,
     #                           choices=STATUS_CHOICES,
     #                           default='draft')
 
+    def total_likes(self):
+        return self.likes.count()
 
 
     class Meta:
@@ -46,7 +50,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='comments')
-    author = models.OneToOneRel(field_name='author_id', to='Author.id', field= 'none',  on_delete=models.CASCADE)
+    # author = models.OneToOneRel(field_name='author_id', to='Author.id', field= 'none',  on_delete=models.CASCADE)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)

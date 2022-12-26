@@ -1,6 +1,9 @@
 {% extends 'posts/base.html' %}
 
 {% block content %}
+
+
+
     <div class="row">
         <div class="blog-post">
             <h2 class="blog-post-title">{{ post.title }}</h2>
@@ -45,20 +48,29 @@
             <a class="btn btn-outline-success" href="comment/">Add comment</a>
             <a class="btn btn-outline-dark" href="{% url 'post_share' pk=post.id %}">Share this post </a>
 
+            <form method="POST" action="{% url 'like_post' post.pk %}">
+
+                {% csrf_token %}
+
+                <button type="submit" , name="post_id" , value="{{ post.id }}" , class="btn btn-secondary "> {{ total_likes }} Like</button>
+
+            </form>
+
+
         </div>
 
 
-{#        <div>#}
-{#            <br>#}
-{#            <h2>Similar posts</h2>#}
-{#            {% for post in similar_posts %}#}
-{#                <p>#}
-{#                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>#}
-{#                </p>#}
-{#            {% empty %}#}
-{#                There are no similar posts yet.#}
-{#            {% endfor %}#}
-{#        </div>#}
+        {#        <div>#}
+        {#            <br>#}
+        {#            <h2>Similar posts</h2>#}
+        {#            {% for post in similar_posts %}#}
+        {#                <p>#}
+        {#                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>#}
+        {#                </p>#}
+        {#            {% empty %}#}
+        {#                There are no similar posts yet.#}
+        {#            {% endfor %}#}
+        {#        </div>#}
         <div>
             {% for comment in post.comments.all %}
 
@@ -81,7 +93,7 @@
                             {{ comment.created }}
                         </p>
                         {{ comment.body|linebreaks }}
-                        <strong class="d-block text-gray-dark">by {{ comment.Author.id }} </strong>
+                        <strong class="d-block text-gray-dark">by {{ comment.author_id }} </strong>
                         <span class="text-muted">{{ comment.created_date }}</span>
                         <div class="text-dark">
                             {{ comment.text }}

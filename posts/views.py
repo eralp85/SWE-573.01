@@ -11,8 +11,8 @@ from django.core.mail import send_mail
 from taggit.models import Tag
 from authenticator.models import Profile
 from django.contrib.auth import get_user_model
-
-
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy, reverse
 # Create your views here.
 
 @login_required
@@ -32,13 +32,15 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     comments = post.comments
 
+    stuff = get_object_or_404(Post, id=pk)
+    total_likes = stuff.total_likes()
     # post_tags_ids = post.tags.values_list('id', flat=True)
     # similar_posts = Post.created_date.filter(tags__in=post_tags_ids) \
     #     .exclude(id=post.id)
     # similar_posts = similar_posts.annotate(same_tags=Count('tags')) \
     #                     .order_by('-same_tags', '-created_date')[:4]
 
-    return render(request, 'posts/post_detail.html', {'post': post, 'comments': comments})
+    return render(request, 'posts/post_detail.html', {'post': post, 'comments': comments, 'total_likes':total_likes})
 
 @login_required
 def post_new(request):
@@ -50,6 +52,8 @@ def post_new(request):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
+            post.tags.add(*form.cleaned_data['tags'])
+
 
             return redirect('post_detail', pk=post.pk)
     else:
@@ -204,3 +208,9 @@ def edit(request):
                   {'user_form': user_form,
                    'profile_form': profile_form},
                   'posts:my_account.html')
+
+
+def LikeView(request,pk):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    post.likes.add(request.user)
+    return HttpResponseRedirect(reverse('post_detail',args=[str(pk)]))
