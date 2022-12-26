@@ -3,13 +3,15 @@ from django.shortcuts import render
 from django.utils import timezone
 from .models import *
 from django.shortcuts import render, get_object_or_404
-from .forms import PostForm, CommentForm, EmailPostForm
+from .forms import *
 from authenticator.forms import UserEditForm, ProfileEditForm
 from django.shortcuts import redirect
 from django.db.models import Q, Count
 from django.core.mail import send_mail
 from taggit.models import Tag
 from authenticator.models import Profile
+from django.contrib.auth import get_user_model
+
 
 # Create your views here.
 
@@ -21,7 +23,6 @@ def post_list(request, tag_slug=None):
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         posts = posts.filter(tags__in=[tag])
-
 
     return render(request, 'posts/post_list.html', {'posts': posts, 'tag': tag})
 
@@ -109,23 +110,29 @@ def search(request):
 
 
 def my_research(request):
-    posts = Post.objects.filter(author_id=request.user.id).order_by('published_date')
+    posts = Post.objects.filter(author_id=request.user.id).order_by('-published_date')
 
     return render(request, 'posts/my_research.html', {'posts': posts})
 
 
 def my_account(request):
-    # author = request.user.author
-    # form = ProfileForm(instance=author)
-    #
-    # if request.method == 'POST':
-    #     form = ProfileForm(request.POST, request.FILES,instance=author)
-    #     if form.is_valid():
-    #         form.save()
-    #
-    #
-    # context = {'form' : form}
-    return render(request, 'posts/my_account.html')
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user,
+                                 data=request.POST)
+        profile_form = ProfileEditForm(
+            instance=request.user.profile,
+            data=request.POST,
+            files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    return render(request, 'posts/my_account.html',
+                  {'user_form': user_form,
+                   'profile_form': profile_form}, )
 
 
 def faq(request):
@@ -164,10 +171,10 @@ def post_share(request, pk):
             cd = form.cleaned_data
             post_url = request.build_absolute_uri(
                 post.get_absolute_url())
-            subject = f"{cd['name']} recommends you read " \
-                      f"{post.title}"
-            message = f"Read {post.title} at {post_url}\n\n" \
-                      f"{cd['name']}\'s comments: {cd['comments']}"
+            subject = f"{post.author} recommends you read {post.title} "
+
+            message = f"Read {post.title} at {post_url}\n\n"
+
             send_mail(subject, message, 'swebogazici@gmail.com',
                       [cd['to']])
             sent = True
@@ -175,14 +182,15 @@ def post_share(request, pk):
         form = EmailPostForm()
     return render(request, 'posts/share.html', {'post': post, 'form': form, 'sent': sent})
 
+
 def edit(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user,
                                  data=request.POST)
         profile_form = ProfileEditForm(
-                                    instance=request.user.profile,
-                                    data=request.POST,
-                                    files=request.FILES)
+            instance=request.user.profile,
+            data=request.POST,
+            files=request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()

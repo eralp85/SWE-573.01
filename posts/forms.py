@@ -1,6 +1,6 @@
 from django import forms
 from .models import *
-from authenticator.forms import NewUserForm, UserEditForm, ProfileEditForm
+from authenticator.forms import *
 from authenticator.models import Profile
 
 
@@ -24,8 +24,7 @@ class CommentForm(forms.ModelForm):
 
 
 class EmailPostForm(forms.Form):
-    name = forms.CharField(max_length=25)
-    email = forms.EmailField()
+
     to = forms.EmailField()
     comments = forms.CharField(required=False, widget=forms.Textarea)
 
