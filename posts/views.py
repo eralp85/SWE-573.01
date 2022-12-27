@@ -17,7 +17,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Contact
-
+from .common.decorators import ajax_required
 
 
 
@@ -229,7 +229,7 @@ def user_list(request):
     users = User.objects.filter(is_active=True)
     return render(request,
                   'posts/user/list.html',
-                  {'users': users})
+                  {'section': 'people', 'users': users})
 @login_required
 def user_detail(request, username):
     user = get_object_or_404(User,
@@ -237,7 +237,7 @@ def user_detail(request, username):
                              is_active=True)
     return render(request,
                   'posts/user/detail.html',
-                  {'user': user})
+                  {'section': 'people', 'user': user})
 
 @require_POST
 @login_required
