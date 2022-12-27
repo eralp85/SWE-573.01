@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.contrib.auth import get_user_model
+from authenticator.models import Profile
 
 # Create your models here.
 
@@ -48,9 +49,10 @@ class Post(models.Model):
         return reverse('post_detail',
                        args=[self.id])
 
+
 class Comment(models.Model):
     post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='comments')
-    # author = models.OneToOneRel(field_name='author_id', to='Author.id', field= 'none',  on_delete=models.CASCADE)
+    author = models.OneToOneRel(field_name='author_id', to='Author.id', field='none',  on_delete=models.CASCADE)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)

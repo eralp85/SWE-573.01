@@ -24,6 +24,9 @@ urlpatterns = [
     path('tag/<slug:tag_slug>/', views.post_list, name='post_list_by_tag'),
     path("logout/", logout_request, name ="logout"),
     path("like/<int:pk>", LikeView, name="like_post"),
+    path('users/', views.user_list, name='user_list'),
+    path('users/<username>/', views.user_detail, name='user_detail'),
+
 
 
 ]

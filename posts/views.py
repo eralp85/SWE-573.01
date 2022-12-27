@@ -13,6 +13,8 @@ from authenticator.models import Profile
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
+from django.contrib.auth.models import User
+
 # Create your views here.
 
 @login_required
@@ -214,3 +216,19 @@ def LikeView(request,pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
     post.likes.add(request.user)
     return HttpResponseRedirect(reverse('post_detail',args=[str(pk)]))
+
+
+@login_required
+def user_list(request):
+    users = User.objects.filter(is_active=True)
+    return render(request,
+                  'posts/user/list.html',
+                  {'users': users})
+@login_required
+def user_detail(request, username):
+    user = get_object_or_404(User,
+                             username=username,
+                             is_active=True)
+    return render(request,
+                  'posts/user/detail.html',
+                  {'user': user})

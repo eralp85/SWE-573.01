@@ -28,4 +28,4 @@ class CommentAdmin(admin.ModelAdmin):
 # class AuthorAdmin(admin.ModelAdmin):
 #     list_display = ['user', 'date_of_birth', 'photo']
 
-
+admin.site.register(Contact)

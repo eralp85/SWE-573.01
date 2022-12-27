@@ -50,12 +50,12 @@ Project [Milestones](https://github.com/eralp85/SWE-573.01/milestones) are as be
   
 
 
-- [ ] 2nd Milestone due on 06.12.2022
+- [X] 2nd Milestone due on 06.12.2022
 
   - Fundamental features, Dockerization, deployed
   
 
-- [ ] 3rd Milestone due on 27.12.2022
+- [X] 3rd Milestone due on 27.12.2022
 
   - Complete features, dockerized, deployed
 
@@ -69,9 +69,17 @@ This app is deployed on AWS EC2. You can visit the site at http://3.85.36.51:800
 
 In order to install application on your machine, you should firstly install the [docker](https://docs.docker.com/desktop/install/windows-install/).
 
-Then, run following command in the project base directory
+To download the and setup the project;
 
-`docker-compose up`
+git clone https://github.com/eralp85/SWE-573.01.git
 
-After docker-compose process finished, you can visit http://127.0.0.1:8000
+Please see wiki page of this project for more information about the code.
+
+In order to run the project on your local: 
+
+python manage.py runserver
+
+For Docker, you need to build the related project in docker docker-compose up --build
+
+
 
