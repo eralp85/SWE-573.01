@@ -28,6 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+# DEBUG = False
+#
+#
+# ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -167,7 +171,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'posts/static/images')
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'swebogazici@gmail.com'
-EMAIL_HOST_PASSWORD = 'Eralp1985!'
+EMAIL_HOST_PASSWORD = '*****'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

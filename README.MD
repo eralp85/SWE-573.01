@@ -65,7 +65,7 @@ This project is under supervision of [Suzan Uskudarli](https://github.com/uskuda
 
 # Installation
 
-This app is deployed on AWS EC2. You can visit the site at http://3.85.36.51:8000
+This app is deployed on AWS EC2. You can visit the site at http://52.23.241.177:8000/login
 
 In order to install application on your machine, you should firstly install the [docker](https://docs.docker.com/desktop/install/windows-install/).
 
