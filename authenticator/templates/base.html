@@ -1,14 +1,102 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="//fonts.googleapis.com/css?family=Cinzel&subset=latin,latin-ext" rel="stylesheet" type="text/css">
     <meta charset="UTF-8">
-    <title>Log-in</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title> Eralp Unver Page </title>
+
+
 </head>
-<body class="bg-danger">
-    {% block content %}
-    {% endblock %}
+
+<body>
+<nav class="py-2 bg-light border-bottom">
+    <div class="container d-flex flex-wrap justify-content-center">
+        <ul class="nav">
+            <li class="nav-item"><a href="/home" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="/myresearch" class="nav-link link-dark px-2">My Research</a></li>
+            <li class="nav-item"><a href="/users" class="nav-link link-dark px-2">Friends</a></li>
+            <li class="nav-item"><a href="/faq" class="nav-link link-dark px-2">FAQs</a></li>
+            <li class="nav-item"><a href="/myaccount" class="nav-link link-dark px-2">My Account</a></li>
+        </ul>
+    </div>
+</nav>
+<header class="p-3 bg-danger">
+    <div class="container-fluid">
+        <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <ul class="nav col-12 col-lg-auto mb-2 justify-content-center mb-md-0">
+                <li>
+                    <a href="/home">
+                        <img class="img-fluid" src="{{ '/images/image/logo.jpeg' }}" style="width:100px;"/>
+                    </a>
+                </li>
+                <li><a href="/home" class="nav-link px-2 text-white">Main</a></li>
+                <li><a href="/macro_economy" class="nav-link px-2 text-white">Macro Economy</a></li>
+                <li><a href="/equity" class="nav-link px-2 text-white">Equity </a></li>
+                <li><a href="/fixed_income" class="nav-link px-2 text-white">Fixed Income</a></li>
+                <li><a href="/company_news" class="nav-link px-2 text-white">Company News</a></li>
+            </ul>
+            <a href="{% url 'post_new' %}" class="btn btn-warning"> BOX_it =
+
+{#                {% include './icons/box.svg' %}#}
+            </a>
+            <form class="mb-3 mb-lg-0 me-lg-3 d-flex align-items-center" role="search" method=POST action="{% url 'search' %}">
+
+                {% csrf_token %}
+
+                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search"
+                       aria-label="Search" name="searched">
+                <div class="text-end ms-2">
+                    <a class="btn btn-warning" href="{% url 'logout' %}">Logout</a>
+                </div>
+                <div class="ps-2 small">
+                    Hello, <br><strong>{{ user.username }}</strong>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</header>
+
+{% comment %}<div class="page-header">
+    <h1><a href="/">SWE-573 Project</a></h1>
+    <div class="links">
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'post_new' %}" class="top-menu">
+
+        {% include './icons/file-earmark-plus.svg' %}
+    </a>
+</div>{% endcomment %}
+<div class="content container">
+    <div class="row">
+
+            {% block content %}
+            {% endblock %}
+
+    </div>
+</div>
+
+<footer class="footer mt-5 py-3 bg-light">
+    <div class="container">
+        <span class="text-muted">SWE-573</span>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

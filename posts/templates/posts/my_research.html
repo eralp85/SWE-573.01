@@ -24,9 +24,9 @@
         <div class="col">
             <div class="col-md">
                 <div class="card text-center mb-3" id="Likes">
-                    <div class="card-header">
-                        <h5 class="card-title"> Likes</h5>
-                    </div>
+{#                    <div class="card-header">#}
+{#                        <h5 class="card-title"> Likes</h5>#}
+{#                    </div>#}
 
                     <div class="card-body">
                         <h3 class="card-title"></h3>
@@ -56,7 +56,7 @@
                 <th scope="row">{{ post.id }}</th>
                 <td>{{ post.title }}</td>
                 <td>{{ post.link }} </td>
-                <td>{{ post.tags }}</td>
+                <td>{{ post.tag.name }}</td>
                 <td>{{ post.labels }}</td>
                 <td title="{{ post.text|slice:"0:200" }}">{{ post.text|slice:"0:10" }}...</td>
                 <td>
