@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.test import TestCase
-from .models import Post
+from .models import Post, Tag, Comment
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, get_object_or_404
@@ -89,3 +89,51 @@ class PostTestCase(TestCase):
         posts = Post.objects.filter(Q(title__icontains=searched) | Q(text__icontains=searched))
         self.assertFalse(posts.exists())
         self.assertEqual(posts.count(), 0)
+
+
+class TagTestCase(TestCase):
+    def setUp(self):
+        Tag.objects.create(name="django")
+        Tag.objects.create(name="Test Tag")
+
+    def test_tags_have_names(self):
+        django_tag = Tag.objects.get(name="django")
+        test_tag = Tag.objects.get(name="Test Tag")
+        self.assertEqual(django_tag.name, "django")
+        self.assertFalse(test_tag.name, "da_jango")
+
+
+class CommentTestCase(TestCase):
+    def setUp(self):
+        user = User.objects.create_user(
+            username='user_A',
+            password='password123'
+        )
+        Comment.objects.create(
+            author=user,
+            text='Django is Nice'
+        )
+
+    def test_comment_has_author(self):
+        comment = Comment.objects.get(text='Django is Nice')
+        self.assertEqual(comment.author.username, 'user_A')
+
+    def test_comment_has_text(self):
+        comment = Comment.objects.get(text='Django is Nice')
+        self.assertEqual(comment.text, 'Django is Nice')
+
+
+class ProfileEditTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.form_data = {'date_of_birth_date': '1900-01-01'}
+
+    def test_form_valid(self):
+        form = ProfileEditForm(self.form_data, instance=self.user)
+        self.assertTrue(form.is_valid())
+
+    def test_form_update(self):
+        form = ProfileEditForm(self.form_data, instance=self.user)
+        form.save()
+        self.user.refresh_from_db()
+        self.assertFalse(self.user.profile.birth_date, '1990-01-01')
