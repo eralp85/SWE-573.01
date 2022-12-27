@@ -16,13 +16,12 @@
                         </a>
 
 
-
                         <p class="card-text card-summary">{{ post.text|linebreaksbr }}</p>
 
                         <p class="tags">
                             Tags:
                             {% for tag in post.tags.all %}
-                                <a href="{% url "post_list_by_tag" tag.slug %}">
+                                <a href="{% url "post_list_by_tag" tag.slug %}" class="badge bg-danger">
                                     {{ tag.name }}
                                 </a>
                                 {% if not forloop.last %}, {% endif %}
@@ -38,33 +37,21 @@
                                 <a href="/post/{{ post.id }}/comment/" class="btn btn-outline-success">
                                     Comment> </a>
                                 {% if post.link %}
-                                    <a href="{{ post.link }}" target="_blank" class="btn btn-outline-primary"">
+                                    <a href="{{ post.link }}" target="_blank" class="btn btn-outline-primary">
                                     Goto> </a>
                                 {% else %}
                                     There is no Link
                                 {% endif %}
 
-                                <div class="bd-example-snippet bd-code-snippet">
-                                    <div class="bd-example">
-                                        <div class="btn-group w-100 align-items-center justify-content-between flex-wrap">
-                                            <div class="dropend">
-                                                <button class="btn btn-dark dropdown-toggle" type="button"
-                                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Action
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><h6 class="dropdown-header">Choose Action</h6></li>
-                                                    <button type="submit" , name="post_id" , value="{{ post.id }}" , class="btn btn-secondary ">  Like</button>
-                                                    <li><a class="dropdown-item" href="#">Award</a></li>
-                                                    <li><a class="dropdown-item" href="#">Prioritize</a></li>
+                                <form method="POST" action="{% url 'like_post' post.pk %}">
 
-                                                </ul>
-                                            </div>
-                                        </div>
+                                    {% csrf_token %}
 
-                                    </div>
+                                    <button type="submit" name="post_id" value="{{ post.id }}"
+                                            class="btn btn-secondary "> {{ total_likes }} Like
+                                    </button>
 
-                                </div>
+                                </form>
 
                             </div>
 

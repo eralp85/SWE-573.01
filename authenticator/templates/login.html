@@ -4,14 +4,16 @@
 
     {% load crispy_forms_tags %}
 
-
-     <img class = "img-responsive" float=”left" src= {{ '/images/image/logo.jpeg' }} >
-
+    <div class="container d-flex justify-content-center">
+        <div class="col-3">
+            <img class="img-fluid" src="{{ '/images/image/logo.jpeg' }}" />
+        </div>
+    </div>
     <!--Login-->
-    <div class="container py-5">
+    <div class="container pb-5">
         <div class="row">
             <div class="col-sm-4 mx-auto bg-white rounded-2">
-                <h1>Log_in</h1>
+                <h1 class="text-center py-2">Login</h1>
                 <!-- Messages -->
                 {% if messages %}
                     {% for message in messages %}
@@ -20,33 +22,34 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-{#                <form method="POST">#}
-{#                    {% csrf_token %}#}
-{#                    {{ login_form|crispy }}#}
-{#                    <div class="row mt-2">#}
-{#                        <button class="btn btn-primary" type="submit">Login</button>#}
-{#                        <a class="btn btn-primary" href="/register">Register</a>#}
-{#                    </div>#}
-{#                </form>#}
-                         <div class="d-flex justify-content-center">
-                <form method="POST" class="col-9">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username*</label>
-                        <input type="text" name="username" class="form-control" id="username">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password*</label>
-                        <input type="password" name="password" class="form-control" id="password">
-                    </div>
-                    <div class="d-flex flex-column align-items-center mt-2">
-                        <button class="btn btn-primary mb-3" type="submit">Login</button>
-                        <a class="btn btn-primary" href="/register">Register</a>
-                    </div>
-                </form>
-                     </div>
+                {#                <form method="POST">#}
+                {#                    {% csrf_token %}#}
+                {#                    {{ login_form|crispy }}#}
+                {#                    <div class="row mt-2">#}
+                {#                        <button class="btn btn-primary" type="submit">Login</button>#}
+                {#                        <a class="btn btn-primary" href="/register">Register</a>#}
+                {#                    </div>#}
+                {#                </form>#}
+                <div class="d-flex justify-content-center">
+                    <form method="POST" class="col-9">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username*</label>
+                            <input type="text" name="username" class="form-control" id="username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password*</label>
+                            <input type="password" name="password" class="form-control" id="password">
+                        </div>
+                        <div class="d-flex flex-column align-items-center mt-2">
+                            <button class="btn btn-primary mb-3" type="submit">Login</button>
+                            <a class="btn btn-primary" href="/register">Register</a>
+                        </div>
+                    </form>
+                </div>
 
-                <p class="text-center my-3">Forgot Your Password? <a href="{% url 'password_reset' %}">Get Password</a>.</p>
+                <p class="text-center my-3">Forgot Your Password? <a href="{% url 'password_reset' %}">Get Password</a>.
+                </p>
             </div>
 
 

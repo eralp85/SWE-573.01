@@ -1,28 +1,36 @@
-{% extends "authenticator/templates/base.html" %}
+{% extends "eralp.html" %}
 
 {% block content %}
-{% load crispy_forms_tags %}
+    {% load crispy_forms_tags %}
 
-    <div class="bd-example-snippet bd-code-snippet"><div class="bd-example">
-        <p class="display-2">REGISTER</p>
-    </div></div>
-
-<!--Register-->
-<div class="container py-5">
-	<!-- Messages -->
-	{% if messages %}
-		{% for message in messages %}
-			<div class="alert alert-{{ message.tags }}" role="alert">
-				{{ message }}
-			</div>
-		{% endfor %}
-	{% endif %}
-	<form method="POST">
-		{% csrf_token %}
-		{{ register_form|crispy }}
-		<button class="btn btn-primary" type="submit">Register</button>
-	</form>
-	<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
-</div>
+    <div class="container d-flex justify-content-center">
+        <div class="col-3">
+            <img class="img-fluid" src="{{ '/images/image/logo.jpeg' }}"/>
+        </div>
+    </div>
+    <!--Login-->
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-sm-4 mx-auto bg-white rounded-2">
+                <h1 class="text-center py-2">Register</h1>
+                <!-- Messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="d-flex flex-column justify-content-center">
+                    <form method="POST" class="col-9">
+                        {% csrf_token %}
+                        {{ register_form|crispy }}
+                        <button class="btn btn-primary" type="submit">Register</button>
+                    </form>
+                    <p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

@@ -5,23 +5,11 @@
 
 
     <div class="row">
-        <div class="blog-post">
-            <h2 class="blog-post-title">{{ post.title }}</h2>
-            {% if post.tags %}
-                <h2>Posts tagged with "{{ post.tags }}"</h2>
-            {% endif %}
-            <p class="blog-post-meta"> {{ post.published_date }} by <a href="#"> {{ post.author }}</a></p>
-            <p>
-                <a href="{{ post.link }}">{{ post.link }}</a>
-            </p>
-
-            <p>{{ post.text|linebreaksbr }}</p>
-
-        </div>
-        {% if request.user.id == post.author_id %}
+        <div class="blog-post border border-dark rounded my-3 col-9 p-0">
+        <div class="d-flex justify-content-between">
+            <h2 class="blog-post-title bg-warning px-3">{{ post.title }}</h2>
+            {% if request.user.id == post.author_id %}
             <div>
-
-
                 <a class="btn btn-outline-warning" href="{% url 'post_edit' pk=post.id %}">
                     {% include './icons/pencil-fill.svg' %}
                 </a>
@@ -29,34 +17,47 @@
                 <a class="btn btn-outline-danger" href="{% url 'post_remove' pk=post.pk %}">
                     {% include './icons/clipboard-x.svg' %}
                 </a>
-                <a href="{{ post.link }}" target="_blank" class="btn btn-outline-primary"> Goto> </a>
             </div>
         {% endif %}
-        <br>
-        <p class="tags">
-            Tags:
-            {% for tag in post.tags.all %}
-                <a href="{% url "post_list_by_tag" tag.slug %}">
-                    {{ tag.name }}
-                </a>
-                {% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        </p>
+        </div>
+            <div class="px-3">
+                <p class="blog-post-meta"> {{ post.published_date }} by <a href="#"> {{ post.author }}</a></p>
+                <p class="border rounded p-2 border-danger">
+                    Related Link : <a href="{{ post.link }}">{{ post.link }}</a>
+                </p>
 
-        <div>
-            <br>
-            <a class="btn btn-outline-success" href="comment/">Add comment</a>
-            <a class="btn btn-outline-dark" href="{% url 'post_share' pk=post.id %}">Share this post </a>
+                <p class="border rounded p-2 border-danger">{{ post.text|linebreaksbr }} </p>
+                <hr>
+                <p class="tags small">
+                    Tags:
+                    {% for tag in post.tags.all %}
+                        <a href="{% url "post_list_by_tag" tag.slug %}" class="badge bg-danger">
+                            {{ tag.name }}
+                        </a>
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+
+
+
+        <hr>
+        <div class="d-flex">
+
+            <a class="btn btn-outline-success me-2" href="comment/">Add comment</a>
+            <a class="btn btn-outline-dark me-2" href="{% url 'post_share' pk=post.id %}">Share this post </a>
 
             <form method="POST" action="{% url 'like_post' post.pk %}">
 
                 {% csrf_token %}
 
-                <button type="submit" , name="post_id" , value="{{ post.id }}" , class="btn btn-secondary "> {{ total_likes }} Like</button>
+                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-secondary me-2">
+                    Like <span class="badge bg-primary">{{ total_likes }}</span>
+                </button>
 
             </form>
-
-
+            <a href="{{ post.link }}" target="_blank" class="btn btn-outline-primary"> Goto> </a>
         </div>
 
 
@@ -93,7 +94,7 @@
                             {{ comment.created }}
                         </p>
                         {{ comment.body|linebreaks }}
-                        <strong class="d-block text-gray-dark">by {{ comment.author_id }} </strong>
+                        <strong class="d-block text-gray-dark">by {{ comment.id }} </strong>
                         <span class="text-muted">{{ comment.created_date }}</span>
                         <div class="text-dark">
                             {{ comment.text }}

@@ -63,10 +63,30 @@
 
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ user_form.as_p }}
-                        {{ profile_form.as_p }}
+                        {#{{ user_form.as_p }}#}
+                        {#{{ profile_form.as_p }}#}
+                        <div class="mb-3">
+                            <label for="id_first_name" class="form-label">First name:</label>
+                            <input class="form-control" type="text" name="first_name"
+                                   value="{{ user_form.first_name.value }}" maxlength="150" id="id_first_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_last_name" class="form-label">Last name:</label>
+                            <input class="form-control" type="text" name="last_name"
+                                   value="{{ user_form.last_name.value }}" maxlength="150" id="id_last_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">Email address:</label>
+                            <input class="form-control" type="email" name="email" value="{{ user_form.email.value }}"
+                                   maxlength="254" id="id_email">
+                        </div>
+                        <div class="mb-3">
+                           {{ profile_form.as_p }}
+                        </div>
 
-                        <p><button type="submit" class="btn btn-primary"> Save changes </button> </p>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary"> Save changes</button>
+                        </div>
 
                     </form>
 
