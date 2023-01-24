@@ -18,7 +18,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Contact
 from .common.decorators import ajax_required
-
+# from posts.common.decorators import ajax_required
 
 
 # Create your views here.
@@ -48,7 +48,8 @@ def post_detail(request, pk):
     # similar_posts = similar_posts.annotate(same_tags=Count('tags')) \
     #                     .order_by('-same_tags', '-created_date')[:4]
 
-    return render(request, 'posts/post_detail.html', {'post': post, 'comments': comments, 'total_likes':total_likes})
+    return render(request, 'posts/post_detail.html', {'post': post, 'comments': comments, 'total_likes': total_likes})
+
 
 @login_required
 def post_new(request):
@@ -61,7 +62,6 @@ def post_new(request):
             post.published_date = timezone.now()
             post.save()
             post.tags.add(*form.cleaned_data['tags'])
-
 
             return redirect('post_detail', pk=post.pk)
     else:
@@ -218,10 +218,10 @@ def edit(request):
                   'posts:my_account.html')
 
 
-def LikeView(request,pk):
+def LikeView(request, pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
     post.likes.add(request.user)
-    return HttpResponseRedirect(reverse('post_detail',args=[str(pk)]))
+    return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
 
 
 @login_required
@@ -230,6 +230,8 @@ def user_list(request):
     return render(request,
                   'posts/user/list.html',
                   {'section': 'people', 'users': users})
+
+
 @login_required
 def user_detail(request, username):
     user = get_object_or_404(User,
@@ -239,6 +241,8 @@ def user_detail(request, username):
                   'posts/user/detail.html',
                   {'section': 'people', 'user': user})
 
+
+@ajax_required
 @require_POST
 @login_required
 def user_follow(request):

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% load thumbnail %}
 {% block title %}{{ user.get_full_name }}{% endblock %}
 {% block content %}
@@ -11,7 +12,7 @@
       <span class="total">{{ total_followers }}</span>
       follower{{ total_followers|pluralize }}
     </span>
-    <a href="#" data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}un{% endif %}follow" class="follow button">
+    <a href="{% url 'user_follow' %}" data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}un{% endif %}follow" class="follow button">
       {% if request.user not in user.followers.all %}
         Follow
       {% else %}
@@ -19,7 +20,7 @@
       {% endif %}
     </a>
     <div id="image-list" class="image-container">
-      {% include "images/image/list_ajax.html" with images=user.images_created.all %}
+      {% include "list_ajax.html" with images=user.images_created.all %}
     </div>
   {% endwith %}
 {% endblock %}
