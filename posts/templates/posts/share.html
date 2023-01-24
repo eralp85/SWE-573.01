@@ -1,0 +1,35 @@
+{% extends 'posts/base.html' %}
+
+
+{% block content %}
+    {% if sent %}
+        <h1>E-mail successfully sent</h1>
+        <div class="alert alert-success">
+            "{{ post.title }}" was successfully sent to {{ form.cleaned_data.to }}.
+        </div>
+    {% else %}
+        <h1>Share "{{ post.title }}" by e-mail</h1>
+        <p> From {{ user.username }}  </p>
+        <div class="col-6">
+            <form method="post">
+                {% csrf_token %}
+                {#            {{ form.as_p }}#}
+                <div class="mb-3">
+                    <label for="id_to" class="form-label">To:</label>
+                    <input type="email" name="to" required="" id="id_to" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="id_comments" class="form-label">Comments:</label>
+                    <textarea class="form-control" name="comments" cols="40" rows="10" id="id_comments"
+                              data-gramm="false"
+                              wt-ignore-input="true"></textarea>
+                </div>
+
+                <div class="mt-3">
+                    <input type="submit" class="btn btn-primary" value="Send e-mail">
+                </div>
+            </form>
+        </div>
+
+    {% endif %}
+{% endblock %}
