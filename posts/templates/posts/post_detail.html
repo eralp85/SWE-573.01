@@ -6,20 +6,20 @@
 
     <div class="row">
         <div class="blog-post border border-dark rounded my-3 col-9 p-0">
-        <div class="d-flex justify-content-between">
-            <h2 class="blog-post-title bg-warning px-3">{{ post.title }}</h2>
-            {% if request.user.id == post.author_id %}
-            <div>
-                <a class="btn btn-outline-warning" href="{% url 'post_edit' pk=post.id %}">
-                    {% include './icons/pencil-fill.svg' %}
-                </a>
+            <div class="d-flex justify-content-between">
+                <h2 class="blog-post-title bg-warning px-3">{{ post.title }}</h2>
+                {% if request.user.id == post.author_id %}
+                    <div>
+                        <a class="btn btn-outline-warning" href="{% url 'post_edit' pk=post.id %}">
+                            {% include './icons/pencil-fill.svg' %}
+                        </a>
 
-                <a class="btn btn-outline-danger" href="{% url 'post_remove' pk=post.pk %}">
-                    {% include './icons/clipboard-x.svg' %}
-                </a>
+                        <a class="btn btn-outline-danger" href="{% url 'post_remove' pk=post.pk %}">
+                            {% include './icons/clipboard-x.svg' %}
+                        </a>
+                    </div>
+                {% endif %}
             </div>
-        {% endif %}
-        </div>
             <div class="px-3">
                 <p class="blog-post-meta"> {{ post.published_date }} by <a href="#"> {{ post.author }}</a></p>
                 <p class="border rounded p-2 border-danger">
@@ -41,7 +41,6 @@
         </div>
 
 
-
         <hr>
         <div class="d-flex">
 
@@ -61,17 +60,17 @@
         </div>
 
 
-        {#        <div>#}
-        {#            <br>#}
-        {#            <h2>Similar posts</h2>#}
-        {#            {% for post in similar_posts %}#}
-        {#                <p>#}
-        {#                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>#}
-        {#                </p>#}
-        {#            {% empty %}#}
-        {#                There are no similar posts yet.#}
-        {#            {% endfor %}#}
-        {#        </div>#}
+        <div>
+            <br>
+            <h2>Similar posts</h2>
+            {% for post in similar_posts %}
+                <p>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </p>
+            {% empty %}
+                There are no similar posts yet.
+            {% endfor %}
+        </div>
         <div>
             {% for comment in post.comments.all %}
 

@@ -18,6 +18,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Contact
 from .common.decorators import ajax_required
+
+
 # from posts.common.decorators import ajax_required
 
 
@@ -42,13 +44,14 @@ def post_detail(request, pk):
 
     stuff = get_object_or_404(Post, id=pk)
     total_likes = stuff.total_likes()
-    # post_tags_ids = post.tags.values_list('id', flat=True)
-    # similar_posts = Post.created_date.filter(tags__in=post_tags_ids) \
-    #     .exclude(id=post.id)
-    # similar_posts = similar_posts.annotate(same_tags=Count('tags')) \
-    #                     .order_by('-same_tags', '-created_date')[:4]
+    post_tags_ids = post.tags.values_list('id', flat=True)
+    similar_posts = Post.objects.filter(tags__in=post_tags_ids) \
+        .exclude(id=post.id)
+    similar_posts = similar_posts.annotate(same_tags=Count('tags')) \
+        .order_by('-same_tags', '-published_date')[:10]
 
-    return render(request, 'posts/post_detail.html', {'post': post, 'comments': comments, 'total_likes': total_likes})
+    return render(request, 'posts/post_detail.html', {'post': post, 'comments': comments,
+                                                      'similar_posts': similar_posts, 'total_likes': total_likes})
 
 
 @login_required
@@ -240,7 +243,6 @@ def user_detail(request, username):
     return render(request,
                   'posts/user/detail.html',
                   {'section': 'people', 'user': user})
-
 
 
 @require_POST
