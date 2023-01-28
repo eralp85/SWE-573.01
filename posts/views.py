@@ -245,6 +245,8 @@ def user_detail(request, username):
                   {'section': 'people', 'user': user})
 
 
+
+@ajax_required
 @require_POST
 @login_required
 def user_follow(request):
