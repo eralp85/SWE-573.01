@@ -1,54 +1,109 @@
 {% extends "base.html" %}
+{% load blog_tags %}
 {% load static %}
 {% load thumbnail %}
 {% block title %}{{ user.get_full_name }}{% endblock %}
 {% block content %}
-  <h1>{{ user.get_full_name }}</h1>
-  <div class="profile-info">
-    <img src="{% thumbnail user.profile.photo 180x180 %}" class="user-detail">
-  </div>
-  {% with total_followers=user.followers.count %}
-    <span class="count">
+
+    <h1>{{ user.get_full_name }}</h1>
+    <div class="profile-info">
+        <img src="{% thumbnail user.profile.photo 180x180 %}" class="user-detail">
+    </div>
+    {% with total_followers=user.followers.count %}
+        <span class="count">
       <span class="total">{{ total_followers }}</span>
       follower{{ total_followers|pluralize }}
     </span>
-    <a href="{% url 'user_follow' %}" data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}un{% endif %}follow" class="follow button">
-      {% if request.user not in user.followers.all %}
-        Follow
-      {% else %}
-        Unfollow
-      {% endif %}
-    </a>
-    <div id="image-list" class="image-container">
-      {% include "list_ajax.html" with images=user.images_created.all %}
+        <a href="{% url 'user_follow' %}" data-id="{{ user.id }}"
+           data-action="{% if request.user in user.followers.all %}un{% endif %}follow" class="follow button">
+            {% if request.user not in user.followers.all %}
+                Follow
+            {% else %}
+                Unfollow
+            {% endif %}
+        </a>
+        <div id="image-list" class="image-container">
+            {% include "list_ajax.html" with images=user.images_created.all %}
+        </div>
+    {% endwith %}
+
+    <div class="row">
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center mb-3" id="Total Posts">
+                    <div class="card-header">
+                        <h5 class="card-title"> Total Posts</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <h3 class="card-title">{{ posts.count }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  {% endwith %}
+
+    <div class="row">
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center mb-3" id="Total Posts">
+                    <div class="card-header">
+                        <h5 class="card-title"> Latest Posts</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <h3 class="card-title">{% show_latest_posts 3 %}</h3>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center mb-3" id="Total Posts">
+                    <div class="card-header">
+                        <h5 class="card-title"> Most Commented Posts</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <h3 class="card-title">{{ posts.count }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
 
 {% block domready %}
-  $('a.follow').click(function(e){
+    $('a.follow').click(function(e){
     e.preventDefault();
     $.post('{% url "user_follow" %}',
-      {
-        id: $(this).data('id'),
-        action: $(this).data('action')
-      },
-      function(data){
-        if (data['status'] == 'ok') {
-          var previous_action = $('a.follow').data('action');
-          // toggle data-action
-          $('a.follow').data('action',
-            previous_action == 'follow' ? 'unfollow' : 'follow');
-          // toggle link text
-          $('a.follow').text(
-            previous_action == 'follow' ? 'Unfollow' : 'Follow');
-          // update total followers
-          var previous_followers = parseInt(
-            $('span.count .total').text());
-          $('span.count .total').text(previous_action == 'follow' ?
-          previous_followers + 1 : previous_followers - 1);
-        }
-      }
+    {
+    id: $(this).data('id'),
+    action: $(this).data('action')
+    },
+    function(data){
+    if (data['status'] == 'ok') {
+    var previous_action = $('a.follow').data('action');
+    // toggle data-action
+    $('a.follow').data('action',
+    previous_action == 'follow' ? 'unfollow' : 'follow');
+    // toggle link text
+    $('a.follow').text(
+    previous_action == 'follow' ? 'Unfollow' : 'Follow');
+    // update total followers
+    var previous_followers = parseInt(
+    $('span.count .total').text());
+    $('span.count .total').text(previous_action == 'follow' ?
+    previous_followers + 1 : previous_followers - 1);
+    }
+    }
     );
-  });
+    });
 {% endblock %}
