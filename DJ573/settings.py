@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'posts',
     'authenticator',
     'crispy_forms',
-    'users_',
     'taggit',
     'easy_thumbnails',
 
