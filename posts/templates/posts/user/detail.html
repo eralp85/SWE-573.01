@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="card-body">
-                        <h3 class="card-title"> {% total_posts %}{{ posts.count }} </h3>
+                        <h3 class="card-title"> {{ count }} </h3>
                     </div>
                 </div>
             </div>
@@ -52,7 +52,12 @@
                     </div>
 
                     <div class="card-body">
-                        <h3 class="card-title">{% show_latest_posts 3 %}</h3>
+                        <h3 class="card-title"></h3>
+                        {% for post in latest_posts_db %}
+                            <li>
+                                <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+                            </li>
+                        {% endfor %}
                     </div>
 
                 </div>

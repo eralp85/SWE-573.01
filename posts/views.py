@@ -240,9 +240,11 @@ def user_detail(request, username):
     user = get_object_or_404(User,
                              username=username,
                              is_active=True)
+
+    all_posts = Post.objects.filter(author=user.id)
     return render(request,
                   'posts/user/detail.html',
-                  {'section': 'people', 'user': user})
+                  {'section': 'people', 'user': user, 'id': user.id, 'latest_posts_db':all_posts[:4], 'count': all_posts.count()})
 
 
 
