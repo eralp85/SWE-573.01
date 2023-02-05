@@ -2,21 +2,21 @@
 {% load blog_tags %}
 {% load static %}
 {% load thumbnail %}
-{% block title %}{{ user.get_full_name }}{% endblock %}
+{% block title %}{{ userToSee.get_full_name }}{% endblock %}
 {% block content %}
 
-    <h1>{{ user.get_full_name }}</h1>
+    <h1>{{ userToSee.get_full_name }}</h1>
     <div class="profile-info">
-        <img src="{% thumbnail user.profile.photo 180x180 %}" class="user-detail">
+        <img src="{% thumbnail userToSee.profile.photo 180x180 %}" class="user-detail">
     </div>
-    {% with total_followers=user.followers.count %}
+    {% with total_followers=userToSee.followers.count %}
         <span class="count">
       <span class="total">{{ total_followers }}</span>
       follower{{ total_followers|pluralize }}
     </span>
-        <a href="{% url 'user_follow' %}" data-id="{{ user.id }}"
-           data-action="{% if request.user in user.followers.all %}un{% endif %}follow" class="follow button">
-            {% if request.user not in user.followers.all %}
+        <a href="{% url 'user_follow' %}" data-id="{{ userToSee.id }}"
+           data-action="{% if request.user in userToSee.followers.all %}un{% endif %}follow" class="follow button">
+            {% if request.user not in userToSee.followers.all %}
                 Follow
             {% else %}
                 Unfollow
@@ -75,7 +75,12 @@
                     </div>
 
                     <div class="card-body">
-                        <h3 class="card-title">{{ posts.count }}</h3>
+                        {% for post in most_commented_posts %}
+                            <li>
+                                <a href="% url 'post_detail' pk=post.pk %">{{ post.title }}
+                                    ({{ post.total_comments }})</a>
+                            </li>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -85,30 +90,35 @@
 
 {% endblock %}
 
-{% block domready %}
-    $('a.follow').click(function(e){
-    e.preventDefault();
-    $.post('{% url "user_follow" %}',
-    {
-    id: $(this).data('id'),
-    action: $(this).data('action')
-    },
-    function(data){
-    if (data['status'] == 'ok') {
-    var previous_action = $('a.follow').data('action');
-    // toggle data-action
-    $('a.follow').data('action',
-    previous_action == 'follow' ? 'unfollow' : 'follow');
-    // toggle link text
-    $('a.follow').text(
-    previous_action == 'follow' ? 'Unfollow' : 'Follow');
-    // update total followers
-    var previous_followers = parseInt(
-    $('span.count .total').text());
-    $('span.count .total').text(previous_action == 'follow' ?
-    previous_followers + 1 : previous_followers - 1);
-    }
-    }
-    );
-    });
+
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+            $('a.follow').click(function (e) {
+                e.preventDefault();
+                $.post('{% url "user_follow" %}',
+                    {
+                        id: $(this).data('id'),
+                        action: $(this).data('action')
+                    },
+                    function (data) {
+                        if (data['status'] == 'ok') {
+                            var previous_action = $('a.follow').data('action');
+                            // toggle data-action
+                            $('a.follow').data('action',
+                                previous_action == 'follow' ? 'unfollow' : 'follow');
+                            // toggle link text
+                            $('a.follow').text(
+                                previous_action == 'follow' ? 'Unfollow' : 'Follow');
+                            // update total followers
+                            var previous_followers = parseInt(
+                                $('span.count .total').text());
+                            $('span.count .total').text(previous_action == 'follow' ?
+                                previous_followers + 1 : previous_followers - 1);
+                        }
+                    }
+                );
+            });
+        });
+    </script>
 {% endblock %}

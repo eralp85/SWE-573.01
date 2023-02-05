@@ -21,7 +21,7 @@
                         <p class="tags">
                             Tags:
                             {% for tag in post.tags.all %}
-                                <a href="{% url "post_list_by_tag" tag.slug %}" class="badge bg-danger">
+                                <a href="{% url 'post_list_by_tag' tag.slug %}" class="badge bg-danger">
                                     {{ tag.name }}
                                 </a>
                                 {% if not forloop.last %}, {% endif %}
@@ -35,30 +35,32 @@
                                     post </a>
 
                                 <a href="/post/{{ post.id }}/comment/" class="btn btn-outline-success">
-                                    Comment> </a>
+                                    Comment> ({{ post.total_comments }})</a>
+                                <a class="btn btn-secondary like-button" style="" data-id="{{ post.id }}">Like
+                                    {% if post.total_likes %}({{ post.total_likes }}){% endif %}</a>
                                 {% if post.link %}
                                     <a href="{{ post.link }}" target="_blank" class="btn btn-outline-primary">
-                                    Goto> </a>
+                                        Goto> </a>
                                 {% else %}
                                     There is no Link
                                 {% endif %}
 
-                                <form method="POST" action="{% url 'like_post' post.pk %}">
-
-                                    {% csrf_token %}
-
-                                    <button type="submit" name="post_id" value="{{ post.id }}"
-                                            class="btn btn-secondary "> {{ total_likes }} Like
-                                    </button>
-
-                                </form>
+                                {#                                <form method="POST" action="{% url 'like_post' post.pk %}">#}
+                                {##}
+                                {#                                    {% csrf_token %}#}
+                                {##}
+                                {#                                    <button type="submit" name="post_id" value="{{ post.id }}"#}
+                                {#                                            class="btn btn-secondary "> {{ total_likes }} Like#}
+                                {#                                    </button>#}
+                                {##}
+                                {#                                </form>#}
 
                             </div>
 
                         </div>
                         <div class="d-flex w-100 justify-content-between">
                             <small class="text-muted">Published: {{ post.published_date }}</small>
-                            <a href="/users/{{ post.author_id }}" class="text-muted small"> User: {{ post.author }}</a>
+                            <a href="/users/{{ post.author }}" class="text-muted small"> User: {{ post.author }}</a>
                         </div>
                     </div>
 
@@ -79,5 +81,26 @@
         </article>{% endcomment %}
         {% endfor %}
     </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+            $('.like-button').click(function (e) {
+                e.preventDefault();
+
+                var post_id = $(this).data('id');
+                var $this = $(this);
+
+                $.ajax({
+                    url: '/like/' + post_id,
+                    method: 'GET',
+                    success: function (data) {
+                        $this.html('Like (' + data.likes_count + ')');
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
 

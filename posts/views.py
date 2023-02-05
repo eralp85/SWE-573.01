@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from taggit.models import Tag
 from authenticator.models import Profile
 from django.contrib.auth import get_user_model
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.models import User
 from django.http import JsonResponse
@@ -27,7 +27,19 @@ from .common.decorators import ajax_required
 
 @login_required
 def post_list(request, tag_slug=None):
+
+    #Getting friends of users
+    friendsofUser = Contact.objects.filter(user_from=request.user).all()
+
+    #Mapping friends of users
+    friendsofUser=map(lambda x: x.user_to, friendsofUser)
+
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+
+    #filtering posts
+    posts = posts.filter(
+        Q(authot__in=friendsofUser) | Q(author=request.user)).annotate(total_comments=Count('comments')).order_by('-published_date')
+
     tag = None
 
     if tag_slug:
@@ -101,6 +113,7 @@ def add_comment_to_post(request, pk):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
+            comment.author = request.user
             comment.post = post
             comment.save()
             return redirect('post_detail', pk=post.pk)
@@ -115,7 +128,8 @@ def search(request):
     if request.method == "POST":
         searched = request.POST['searched']
         searched = searched.lower()
-        posts_s_ = Post.objects.filter(Q(title__icontains=searched) | Q(text__icontains=searched))
+        posts_s_ = Post.objects.filter(
+            Q(title__icontains=searched) | Q(text__icontains=searched))
 
         # posts_s_ = Post.objects.filter(title__contains=searched | text__contains=searched)
 
@@ -127,7 +141,11 @@ def search(request):
 def my_research(request):
     posts = Post.objects.filter(author_id=request.user.id).order_by('-published_date')
 
-    return render(request, 'posts/my_research.html', {'posts': posts})
+    most_recent_posts = Post.objects.filter(author_id=request.user.id).order_by('-published_date')[:3]
+
+    most_commented_posts = Post.objects.filter(author_id=request.user.id).annotate(total_comments=Count('comment')).order_by('-total_comments')[:3]
+
+    return render(request, 'posts/my_research.html', {'posts': posts, 'most_recent_posts': most_recent_posts, 'most_commented_posts': most_commented_posts})
 
 
 def my_account(request):
@@ -221,11 +239,6 @@ def edit(request):
                   'posts:my_account.html')
 
 
-def LikeView(request, pk):
-    post = get_object_or_404(Post, id=request.POST.get('post_id'))
-    post.likes.add(request.user)
-    return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
-
 
 @login_required
 def user_list(request):
@@ -242,11 +255,13 @@ def user_detail(request, username):
                              is_active=True)
 
     all_posts = Post.objects.filter(author=user.id)
+
+    most_commented_posts = Post.objects.filter(author=user.id).annotate(total_comments=Count('comments')).filter(total_comments_gt=0).order_by('-total_comments')[:4]
+
+
     return render(request,
                   'posts/user/detail.html',
-                  {'section': 'people', 'user': user, 'id': user.id, 'latest_posts_db':all_posts[:4], 'count': all_posts.count()})
-
-
+                  {'section': 'people', 'userToSee': user, 'id': user.id, 'latest_posts_db':all_posts[:4], 'count': all_posts.count(), 'most_commented_posts': most_commented_posts})
 
 
 @require_POST
@@ -268,4 +283,15 @@ def user_follow(request):
             return JsonResponse({'status': 'ok'})
         except User.DoesNotExist:
             return JsonResponse({'status': 'error'})
+    return JsonResponse({'status': 'error'})
+
+def like_post(request,pk):
+    user_id = request.user.id
+    post = get_object_or_404(Post , id=pk)
+    if user_id:
+        if post.likes.filter(id=user_id).exists():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+        return JsonResponse({'status': 'ok', 'likes_count': post.total_likes()})
     return JsonResponse({'status': 'error'})

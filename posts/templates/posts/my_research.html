@@ -19,7 +19,7 @@
     </div>
 
 
-       <div class="row">
+    <div class="row">
         <div class="col">
             <div class="col-md">
                 <div class="card text-center mb-3" id="Total Posts">
@@ -28,7 +28,13 @@
                     </div>
 
                     <div class="card-body">
-                        <h3 class="card-title">{{ posts.most }}</h3>
+                        {% for post in most_recent_posts %}
+                            <li>
+
+                                <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+
+                            </li>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -36,7 +42,7 @@
     </div>
 
 
-       <div class="row">
+    <div class="row">
         <div class="col">
             <div class="col-md">
                 <div class="card text-center mb-3" id="Total Posts">
@@ -45,7 +51,13 @@
                     </div>
 
                     <div class="card-body">
-                        <h3 class="card-title">{{ posts.top }}</h3>
+                        {% for post in most_commented_posts %}
+                            <li>
+
+                                <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }} ({{ post.total_comments }})</a>
+
+                            </li>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
