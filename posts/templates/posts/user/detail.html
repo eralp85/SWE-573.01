@@ -77,8 +77,9 @@
                     <div class="card-body">
                         {% for post in most_commented_posts %}
                             <li>
-                                <a href="% url 'post_detail' pk=post.pk %">{{ post.title }}
-                                    ({{ post.total_comments }})</a>
+
+                                <a href="{% url 'post_detail' pk=post.pk%}">{{ post.title }}({{ post.total_comments}})</a>
+
                             </li>
                         {% endfor %}
                     </div>

@@ -38,7 +38,7 @@ def post_list(request, tag_slug=None):
 
     #filtering posts
     posts = posts.filter(
-        Q(authot__in=friendsofUser) | Q(author=request.user)).annotate(total_comments=Count('comments')).order_by('-published_date')
+        Q(author__in=friendsofUser) | Q(author=request.user)).annotate(total_comments=Count('comments')).order_by('-published_date')
 
     tag = None
 
@@ -143,7 +143,7 @@ def my_research(request):
 
     most_recent_posts = Post.objects.filter(author_id=request.user.id).order_by('-published_date')[:3]
 
-    most_commented_posts = Post.objects.filter(author_id=request.user.id).annotate(total_comments=Count('comment')).order_by('-total_comments')[:3]
+    most_commented_posts = Post.objects.filter(author_id=request.user.id).annotate(total_comments=Count('comments')).order_by('-total_comments')[:3]
 
     return render(request, 'posts/my_research.html', {'posts': posts, 'most_recent_posts': most_recent_posts, 'most_commented_posts': most_commented_posts})
 
@@ -255,9 +255,10 @@ def user_detail(request, username):
                              is_active=True)
 
     all_posts = Post.objects.filter(author=user.id)
-
-    most_commented_posts = Post.objects.filter(author=user.id).annotate(total_comments=Count('comments')).filter(total_comments_gt=0).order_by('-total_comments')[:4]
-
+    # most_commented_posts = Post.objects.filter(author_id=request.user.id).annotate(
+    #     total_comments=Count('comments')).order_by('-total_comments')[:3]
+    most_commented_posts = Post.objects.filter(author_id=user.id).annotate(total_comments=Count('comments')).order_by('-total_comments')[:4]
+    print(len(most_commented_posts))
 
     return render(request,
                   'posts/user/detail.html',
